@@ -16,9 +16,8 @@
         v-bind:key="post._id"
         v-on:dblclick="deletePost(post._id)"
         >
-        {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/$
-        {post.createdAt.getFullYear()}` }}
         <p class="text">{{ post.text }}</p>
+        <button class="addButton" v-on:click="addToScene(post)">Add To Scene</button>
       </div>
     </div>
   </div>
@@ -60,24 +59,42 @@ export default {
 </script>
 
 <style scoped>
+
+.post {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.post p {
+  margin-right: 10px;
+}
+
+.post button {
+  width: 100px;
+  border: 1px solid #AE98BD;
+  background-color: #AE98BD;
+}
+
 div.container {
-  max-width: 800px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
 p.error {
-  border: 1px solid #ff5b5f;
-  background-color: #ffc5c1;
+  border: 1px solid #AE98BD;
+  background-color: #AE98BD;
   padding:  10px;
   margin-bottom: 15px;
 }
 
 div.post {
   position: relative;
-  border: 1px solid #5bd658;
-  background-color:  #bcffb8;
-  padding: 10px 10px 30px 10px;
-  margin-bottom: 15px;
+  border: 0.5px solid #131313;
+  background-color:  #f6f4fd;
+  padding: 5px 10px 5px 5px;
+  margin-bottom: 10px;
 }
 
 div.created-at {
