@@ -9,12 +9,15 @@ router.get("/", async (req, res) => {
   res.send(await posts.find({}).toArray());
 });
 
+let post_id = 0;
 // Add Post
 router.post("/", async (req, res) => {
   const posts = await loadPostsCollection();
+  post_id += 1;
   await posts.insertOne({
     text: req.body.text,
     createdAt: new Date(),
+    post_id: post_id,
   });
   res.status(201).send();
 });
