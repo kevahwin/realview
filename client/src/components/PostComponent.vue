@@ -59,7 +59,7 @@ export default {
       SceneLoader.ImportMesh(
         "",
         "https://realviewtest1.s3.eu-west-2.amazonaws.com/models/",
-        "item.glb",
+        post.text,
         this.$parent.scene, // use the scene object from your parent component
         function (newMeshes) {
           var importedMesh = newMeshes[0];
