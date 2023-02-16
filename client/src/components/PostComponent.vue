@@ -26,7 +26,9 @@
 
 <script>
 import PostService from '../PostService';
-
+//import * as BABYLON from 'babylonjs';
+//mport { SceneLoader } from 'babylonjs';
+var SceneLoader = require("@babylonjs/core").SceneLoader;
 export default {
   name: 'PostComponent',  
   data() {
@@ -51,6 +53,20 @@ export default {
     async deletePost(id) {
       await PostService.deletePost(id);
       this.posts = await PostService.getPosts();
+    },
+    addToScene(post) {
+      console.log(post);
+      SceneLoader.ImportMesh(
+        "",
+        "https://realviewtest1.s3.eu-west-2.amazonaws.com/models/",
+        "item.glb",
+        this.$parent.scene, // use the scene object from your parent component
+        function (newMeshes) {
+          var importedMesh = newMeshes[0];
+          console.log(importedMesh);
+          // do something with the imported mesh
+        }
+      );
     }
   }
 
