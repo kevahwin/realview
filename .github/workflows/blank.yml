@@ -36,4 +36,4 @@ jobs:
       - name: install dependencies
         run: npm ci
       - name: Run backend NodeJS with run dev
-        run: echo 'Running'
+        run: npm run dev
