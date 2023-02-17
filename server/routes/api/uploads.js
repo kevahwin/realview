@@ -99,8 +99,6 @@ const upload = multer({
 //     //res.send(`Successfully uploaded ${req.file.originalname} to ${result.Location }`)
 // });
 
-let count_id = 0;
-
 //POST Single Upload to S3
 router.post("/", upload.single("file"), async (req, res) => {
   // if(err){
@@ -111,7 +109,6 @@ router.post("/", upload.single("file"), async (req, res) => {
 
   //Get the fileLink (Hardcoded now - should be dynamic in future from req.file.location)
   //const filename = "item";
-  const filename = (count_id += count_id);
   const fileLink = await s3GetFileLink(filename);
 
   //Await a UserSchema with field objectURL and store fileLink there
