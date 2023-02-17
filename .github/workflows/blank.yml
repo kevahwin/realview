@@ -34,7 +34,7 @@ jobs:
         run: npm ci
       - name: Build and test
         run: |
-          npm run built
+          npm run build
           npm run test
           
       - name: Deploy to Heroku
