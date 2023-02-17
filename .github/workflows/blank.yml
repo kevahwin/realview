@@ -29,4 +29,6 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: install dependencies
-        run: npm run dev
+        run: |
+          npm i,
+          npm run dev
