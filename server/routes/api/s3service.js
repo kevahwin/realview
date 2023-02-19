@@ -1,13 +1,15 @@
 const { S3 } = require("aws-sdk");
 const multer = require("multer");
 
+post_id = 0;
 //Upload file to s3
 exports.s3Uploadv2 = async (file) => {
   const s3 = new S3();
 
+  post_id += 1;
   const param = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: `models/item.glb`,
+    Key: `models/${post_id}.glb`,
     Body: file.buffer,
   };
   return await s3.upload(param).promise();
