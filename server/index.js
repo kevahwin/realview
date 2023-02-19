@@ -34,8 +34,8 @@ mongoose
 * ROUTES *
 **********/
 //Backend Index
-app.get('/', (req, res) => {
-  res.send('Welcome to the RealView API');
+app.get('/status', (req, res) => {
+  res.send('Welcome to the RealView API - Up and Running');
 });
 
 // Posts - will not be used later on
