@@ -36,6 +36,7 @@ jobs:
       - name: Build front end
         run: |
           cd client
+          npm i
           npm run build
           
       - name: Deploy to Heroku
