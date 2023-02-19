@@ -35,7 +35,7 @@ jobs:
         
       - name: Build front end
         run: |
-          cd client
+          cd realview/client
           npm i          
           npm i @vue/cli
           npm run build
