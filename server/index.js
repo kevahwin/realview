@@ -1,17 +1,48 @@
+/*****************************************
+* INDEX.JS: Main Entry Point for Backend *
+******************************************/
+const dotenv = require("dotenv").config({ path: '.env' });
+const mongoose = require('mongoose');
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const multer = require('multer');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const uploads = require('./routes/api/uploads');
+const posts = require("./routes/api/posts");
 
 const app = express();
 
-// Middleware
+console.log(process.env.MONGODB_URI)
+
+/**************
+* MIDDLEWARE *
+***************/
 app.use(bodyParser.json());
+
 app.use(cors());
+app.use(morgan('tiny'));
+app.use(helmet())
+mongoose
+        .connect('mongodb+srv://groupproject:GroupProject123@cluster0.w5ojlli.mongodb.net/test', {
+        })
+        .then(() => console.log("DB connection successful!"))
+        .catch((error) => console.error(`Error connecting DB: ${error}`));
 
-const posts = require("./routes/api/posts");
+/*********
+* ROUTES *
+**********/
+//Backend Index
+app.get('/', (req, res) => {
+  res.send('Welcome to the RealView API');
+});
 
+// Posts - will not be used later on
 app.use("/api/posts", posts);
-app.use("/api/uploads", posts);
+
+// Uploaded files
+app.use("/api/uploads", uploads);
 
 // Handle production
 if (process.env.NODE_ENV === "production") {
@@ -22,7 +53,8 @@ if (process.env.NODE_ENV === "production") {
   app.get(/.*/, (req, res) => res.sendFile(__dirname + "/public/index.html"));
 }
 
+/**************
+* PORT CONFIG *
+***************/
 const port = process.env.PORT || 5001;
-
-app.listen(port, () => console.log());
-// Comment
+app.listen(port, () => console.log(`Server started on port ${port}`));

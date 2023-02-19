@@ -1,5 +1,7 @@
 const express = require("express");
+const mongoose = require('mongoose');
 const mongodb = require("mongodb");
+const dotenv = require("dotenv").config();
 
 const router = express.Router();
 
@@ -38,7 +40,7 @@ async function loadPostsCollection() {
       useNewUrlParser: true,
     }
   );
-
+  // const client = await mongoose.connect('mongodb+srv://groupproject:GroupProject123@cluster0.w5ojlli.mongodb.net/test', {})
   return client.db("vue_express").collection("posts");
 }
 

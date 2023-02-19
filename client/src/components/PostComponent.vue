@@ -1,6 +1,6 @@
 <template>
-<form @submit.prevent="sendFile" enctype="multipart/form-data">
-
+<!-- <form @submit.prevent="sendFile" enctype="multipart/form-data"> -->
+<div>
         <div v-if="message"
             :class="`message ${error ? 'is-danger' : 'is-success'}`"
             >
@@ -9,7 +9,7 @@
             </div>
         </div>
   
-        <div class="field">
+        <!-- <div class="field">
             <div class="file is-boxed is-primary">
                 
                 <label class="file-label">
@@ -30,7 +30,7 @@
                     </span>
                 </label>
             </div>
-        </div>
+        </div> -->
         <div class="container">
     <h1>Latest Posts</h1>
     <div class="create-post">
@@ -53,12 +53,12 @@
       </div>
     </div>
   </div>
-  </form>
-
+  <!-- </form> -->
+</div>
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 import PostService from '../PostService';
 //import * as BABYLON from 'babylonjs';
 //mport { SceneLoader } from 'babylonjs';
@@ -104,30 +104,30 @@ export default {
         }
       );
     },
-    selectFile() {
-        this.file = this.$refs.file.files[0];
-        this.error = false;
-        this.message = "";
-    },
+    // selectFile() {
+    //     this.file = this.$refs.file.files[0];
+    //     this.error = false;
+    //     this.message = "";
+    // },
     addFileToList() {
         this.uploadedFiles.push(this.fileName);
         this.fileName = '';   
-    },
-    // PUSHING THE UPLOADED FILE TO BACKEND
-    async sendFile() {
-        const formData = new FormData();
-        formData.append('file', this.file);
-        try {
-            await axios.post('api/uploads', formData);
-            this.message = "File has been uploaded";
-            this.file = "";
-            this.error = false;
-        } catch (err) {
-            console.log(err);
-            this.message = err.response.data.error;
-            this.error = true;
-        }
     }
+    // PUSHING THE UPLOADED FILE TO BACKEND
+    // async sendFile() {
+    //     const formData = new FormData();
+    //     formData.append('file', this.file);
+    //     try {
+    //         await axios.post('api/uploads', formData);
+    //         this.message = "File has been uploaded";
+    //         this.file = "";
+    //         this.error = false;
+    //     } catch (err) {
+    //         console.log(err);
+    //         this.message = err.response.data.error;
+    //         this.error = true;
+    //     }
+    // }
    }
   
 

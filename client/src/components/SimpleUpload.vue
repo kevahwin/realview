@@ -36,11 +36,6 @@
             </button>
         </div>
     </form>
-    <div class="field">
-            <button class="button is-info" @click="getItem">
-                Add to Scene
-            </button>
-        </div>
 </template>
 
 <script>
@@ -75,30 +70,6 @@ export default {
             this.error = true;
         }
     },
-    //Using Axios - Doesnt work
-    // async addToScene(){
-    //     try{
-    //         await axios.get('/api/uploads/item');
-    //         this.message = "Adding file to scene";
-    //         this.error = false;
-    //     } catch(err){
-    //         console.log(err);
-    //         this.message = err.response.data.error;
-    //         this.error = true;
-    //     }
-    // }
-    getItem(){
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:5001/api/uploads/item', true);
-        xhr.responseType = 'document';
-        xhr.onload = function(){
-            if(xhr.readyState === xhr.DONE && xhr.status === 200){
-                const fileData = xhr.response;
-                console.log(fileData);
-            }
-        };
-        xhr.send();
-    }
    }
 }
 </script>
