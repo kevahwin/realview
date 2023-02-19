@@ -21,7 +21,18 @@ app.use(bodyParser.json());
 
 app.use(cors());
 app.use(morgan('tiny'));
-app.use(helmet())
+// app.use(helmet())
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      connectSrc: ["'self'", "assets.babylonjs.com"],
+      // add any other directives you need
+    },
+  },
+}));
+
 mongoose
         .connect(process.env.MONGODB_URI, {
         })
