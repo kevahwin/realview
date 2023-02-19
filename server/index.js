@@ -1,7 +1,7 @@
 /*****************************************
 * INDEX.JS: Main Entry Point for Backend *
 ******************************************/
-const dotenv = require("dotenv").config({ path: '.env' });
+const dotenv = require("dotenv").config();
 const mongoose = require('mongoose');
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -14,8 +14,6 @@ const posts = require("./routes/api/posts");
 
 const app = express();
 
-console.log(process.env.MONGODB_URI)
-
 /**************
 * MIDDLEWARE *
 ***************/
@@ -25,7 +23,7 @@ app.use(cors());
 app.use(morgan('tiny'));
 app.use(helmet())
 mongoose
-        .connect('mongodb+srv://groupproject:GroupProject123@cluster0.w5ojlli.mongodb.net/test', {
+        .connect(process.env.MONGODB_URI, {
         })
         .then(() => console.log("DB connection successful!"))
         .catch((error) => console.error(`Error connecting DB: ${error}`));

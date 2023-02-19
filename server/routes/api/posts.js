@@ -35,12 +35,12 @@ router.delete("/:id", async (req, res) => {
 
 async function loadPostsCollection() {
   const client = await mongodb.MongoClient.connect(
-    "mongodb+srv://groupproject:GroupProject123@cluster0.w5ojlli.mongodb.net/test",
+    process.env.MONGODB_URI,
     {
       useNewUrlParser: true,
     }
   );
-  // const client = await mongoose.connect('mongodb+srv://groupproject:GroupProject123@cluster0.w5ojlli.mongodb.net/test', {})
+ 
   return client.db("vue_express").collection("posts");
 }
 
