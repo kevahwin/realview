@@ -3,14 +3,14 @@
   <NavbarComponent />
   <MainComp />
   <SimpleUpload />
-  <PostComponent />
+
   
 </div> 
 </template>
 
 <script>
 
-import PostComponent from './components/PostComponent.vue'
+
 import MainComp from './components/MainComp.vue'
 import NavbarComponent from './components/NavbarComponent.vue'
 import SimpleUpload from './components/SimpleUpload.vue'
@@ -19,7 +19,7 @@ export default {
   name: 'App',
   components: {
     SimpleUpload,
-    PostComponent,
+
     MainComp,
     NavbarComponent
   }
