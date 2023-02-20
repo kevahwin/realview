@@ -37,6 +37,9 @@
             </button>
             </form>
             <hr>
+            <button @click="addAllToScene">     
+                Display All Objects
+            </button>
     <p class="error" v-if="error">{{ error }}</p>
     <div class="posts-container">
       <div class="post"
@@ -153,6 +156,11 @@ export default {
           // do something with the imported mesh
         }
       );
+    },
+    addAllToScene() {
+        for (let i = 0; i < this.posts.length; i++) {
+        this.addToScene2(this.posts[i]);
+    }
     },
     listItem() {
         this.items.push({ name: this.itemName });
