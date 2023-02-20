@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "@babylonjs/loaders": "^5.46.0",
+    "@babylonjs/core": "^5.43.0",
+    "@vue/cli": "^5.0.8",
+    "axios": "^1.2.4",
     "@popperjs/core": "^2.11.6",
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
