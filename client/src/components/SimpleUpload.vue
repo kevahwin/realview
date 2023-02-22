@@ -32,7 +32,7 @@
         </div>
            
             <input type="text" id="create-post" v-model="text" placeholder="create a post">
-            <button class="button is-info" v-on:click="createPost">
+            <button class="button is-info" v-on:click="createPost" >
                 Send
             </button>
             </form>
@@ -97,15 +97,32 @@ export default {
    methods: {
     selectFile() {
         this.file = this.$refs.file.files[0];
+        this.fileExtension = this.file.name.split('.').pop().toLowerCase();
         this.error = false;
         this.message = "";
     },
     async createPost() {
-      const post = this.text ; // set the post's ID to the uploaded file's name
-      await PostService.insertPost(post);
-      this.posts = await PostService.getPosts();
-    },
-    async deletePost(id) {
+    if (!this.text) {
+      this.error = "Please enter some text for the post";
+      return;
+    }
+
+    if (!this.file) {
+      this.error = "Please select a file to upload";
+      return;
+    }
+
+    if (this.fileExtension !== "glb") {
+      this.error = "Invalid file type. Please select a GLB file.";
+      return;
+    }
+
+    const post = this.text ; // set the post's ID to the uploaded file's name
+    await PostService.insertPost(post);
+    this.posts = await PostService.getPosts();
+      },
+
+      async deletePost(id) {
       await PostService.deletePost(id);
       this.posts = await PostService.getPosts();
     },
@@ -115,8 +132,13 @@ export default {
     async sendFile() {
         const formData = new FormData();
         formData.append('file', this.file);
+        console.log("file:", this.file);
 
         try {
+        
+        if (this.fileExtension !== "glb") {
+    throw new Error("Invalid file type. Please select a GLB file.");
+  }
             await axios.post('/api/uploads', formData);
             this.message = "File has been uploaded";
             this.file = "";
