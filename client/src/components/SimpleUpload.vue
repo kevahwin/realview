@@ -121,6 +121,7 @@ export default {
             this.message = "File has been uploaded";
             this.file = "";
             this.error = false;
+            this.$refs.file.value = null; // reset the input field
         } catch (err) {
             console.log(err);
             this.message = err.response.data.error;
