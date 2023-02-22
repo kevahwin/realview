@@ -187,6 +187,7 @@ export default {
     addAllToScene() {
         for (let i = 0; i < this.posts.length; i++) {
         this.addToScene2(this.posts[i]);
+        this.addToScene(this.posts[i]);
     }
     },
     listItem() {
