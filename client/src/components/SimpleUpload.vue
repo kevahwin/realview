@@ -50,13 +50,13 @@
         v-on:dblclick="deletePost(post._id)"
         >
         <p class="text">{{ post.text }}</p>
-        <button class="addButton" v-on:click="addToScene2(post)">Add To Scene</button>
+        <button class="addButton" v-on:click="addToScene2(post); addToScene(post)">Add To Scene</button>
       </div>
       </div>
             <ul>
   <li v-for="(item, index) in items" :key="index">
     {{ itemName }}{{ index + 1 }}
-    <button @click="addToScene(index)">Add to Scene</button>
+    <button @click="addToScene(index); addToScene2(index)">Add to Scene</button>
   </li>
 </ul>
 
@@ -112,7 +112,7 @@ export default {
       return;
     }
 
-    if (this.fileExtension !== "glb") {
+    if (this.fileExtension !== "glb" && this.fileExtension !== "obj") {
       this.error = "Invalid file type. Please select a GLB file.";
       return;
     }
@@ -136,7 +136,7 @@ export default {
 
         try {
         
-        if (this.fileExtension !== "glb") {
+        if (this.fileExtension !== "glb" && this.fileExtension !== "obj") {
     throw new Error("Invalid file type. Please select a GLB file.");
   }
             await axios.post('/api/uploads', formData);
@@ -150,13 +150,13 @@ export default {
             this.error = true;
         }
     },
-    addToScene(index) {
+    addToScene(post) {
       console.log();
       SceneLoader.ImportMesh(
         "",
         "https://realviewtest1.s3.eu-west-2.amazonaws.com/models/",
         
-        `${index}.glb`,
+        `${post.post_id}.obj`,
         this.$parent.scene, // use the scene object from your parent component
         function (newMeshes) {
           var importedMesh = newMeshes[0];

@@ -7,9 +7,13 @@ exports.s3Uploadv2 = async (file) => {
   const s3 = new S3();
 
   post_id += 1;
+  let key = `models/${post_id}.glb`;
+  if (file.originalname.endsWith(".obj")) {
+    key = `models/${post_id}.obj`;
+  }
   const param = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: `models/${post_id}.glb`,
+    Key: key,
     Body: file.buffer,
   };
   return await s3.upload(param).promise();
