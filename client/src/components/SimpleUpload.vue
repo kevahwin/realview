@@ -32,8 +32,8 @@
         </div>
            
             <input type="text" id="create-post" v-model="text" placeholder="create a post">
-            <button class="button is-info" v-on:click="createPost" >
-                Send
+            <button class="button is-info" v-on:click="createPost" :disabled="uploading">
+                {{ uploading ? 'Uploading...' : 'Send' }}
             </button>
             </form>
             <hr>
@@ -83,7 +83,8 @@ export default {
         items: [],
         posts: [],
         text: '',
-        post_id: ''
+        post_id: '',
+        uploading: false
     };
    },
    async created() {
@@ -130,6 +131,7 @@ export default {
 
     // PUSHING THE UPLOADED FILE TO BACKEND
     async sendFile() {
+        this.uploading = true;
         const formData = new FormData();
         formData.append('file', this.file);
         console.log("file:", this.file);
@@ -148,6 +150,8 @@ export default {
             console.log(err);
             this.message = err.response.data.error;
             this.error = true;
+        } finally {
+        this.uploading = false; // set the status back to false
         }
     },
     addToScene(post) {
