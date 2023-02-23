@@ -67,10 +67,9 @@
 
 <script>
 import axios from 'axios';
-
-
 var SceneLoader = require("@babylonjs/core").SceneLoader;
 import PostService from '../PostService'
+
 export default {
    name: "SimpleUpload",
 
@@ -123,8 +122,14 @@ export default {
     this.posts = await PostService.getPosts();
       },
 
-      async deletePost(id) {
+    async deletePost(id) {
+      // Call a Delete request to delete file from S3
+      await axios.delete('/api/uploads/' + id);
+
+      // Call a Delete request to delete the file data from MongoDB
       await PostService.deletePost(id);
+      
+      // Display new list of files
       this.posts = await PostService.getPosts();
     },
     
@@ -137,15 +142,14 @@ export default {
         console.log("file:", this.file);
 
         try {
-        
-        if (this.fileExtension !== "glb" && this.fileExtension !== "obj") {
-    throw new Error("Invalid file type. Please select a GLB file.");
-  }
-            await axios.post('/api/uploads', formData);
-            this.message = "File has been uploaded";
-            this.file = "";
-            this.error = false;
-            this.$refs.file.value = null; // reset the input field
+          if (this.fileExtension !== "glb" && this.fileExtension !== "obj") {
+            throw new Error("Invalid file type. Please select a GLB file.");
+          }
+          await axios.post('/api/uploads', formData);
+          this.message = "File has been uploaded";
+          this.file = "";
+          this.error = false;
+          this.$refs.file.value = null; // reset the input field
         } catch (err) {
             console.log(err);
             this.message = err.response.data.error;

@@ -62,14 +62,14 @@ exports.s3DeleteFile = async (id) => {
 
   const param = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: `models/${id}.glb`,
+    Key: `models/${id}.glb || models/${id}.obj`,       // this will need to handle also obj file types
   };
 
   return await s3.deleteObject(param, function(err, data) {
     if (err) {
       console.log(err);
     } else {
-      console.log("Successfully deleted file from bucket");
+      console.log("Successfully deleted file from S3 bucket");
       console.log(data);
     }
   });

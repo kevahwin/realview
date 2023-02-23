@@ -142,10 +142,9 @@ router.get("/:id", async (req, res) => {
   res.json({ fileLink });
 });
 
+//DELETE item.glb file from S3 by id
 router.delete('/:id', async (req, res) => {
-  // const postId = req.params.id;
-
-  // delete the post from the database
+  // delete the post from the database in PostService.js
   // ...
   // delete the post from S3
   try {

@@ -30,6 +30,7 @@ router.delete("/:id", async (req, res) => {
   const posts = await loadPostsCollection();
 
   await posts.deleteOne({ _id: new mongodb.ObjectId(req.params.id) });
+  console.log('Deleted file data from MongoDB...')
   res.status(200).send({});
 });
 
