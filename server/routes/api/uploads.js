@@ -143,17 +143,17 @@ router.get("/:id", async (req, res) => {
 });
 
 //DELETE item.glb file from S3 by id
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   // delete the post from the database in PostService.js
   // ...
   // delete the post from S3
   try {
-    console.log('Trying to delete')
+    console.log(`Trying to delete ${req.params.id}`)
     await s3DeleteFile(req.params.id);
     res.status(204).send();
   } catch (err) {
     console.error(err);
-    res.status(500).send('Failed to delete post from S3');
+    res.status(500).send("Failed to delete post from S3");
   }
 });
 
