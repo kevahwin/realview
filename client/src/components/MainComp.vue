@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Software Engineering Group Project!</h3>
+    <h3>My Virtual Reality scene</h3>
     <canvas></canvas>
     
 

@@ -31,7 +31,7 @@
             </div>
         </div>
            
-            <input type="text" id="create-post" v-model="text" placeholder="create a post">
+            <input type="text" id="create-post" v-model="text" placeholder="Name your file">
             <button class="button is-info" v-on:click="createPost" :disabled="uploading">
                 {{ uploading ? 'Uploading...' : 'Send' }}
             </button>
