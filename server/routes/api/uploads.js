@@ -13,6 +13,7 @@ const {
   s3GetBucketContents,
   s3GetFile,
   s3GetFileLink,
+  s3DeleteFile
 } = require("./s3service");
 const User = require("../../models/userModel");
 const ERROR_FILE_TYPE = "Only glb files are allowed.";
@@ -139,6 +140,22 @@ router.get("/local", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const fileLink = await s3GetFileLink(req.params.id);
   res.json({ fileLink });
+});
+
+router.delete('/:id', async (req, res) => {
+  // const postId = req.params.id;
+
+  // delete the post from the database
+  // ...
+  // delete the post from S3
+  try {
+    console.log('Trying to delete')
+    await s3DeleteFile(req.params.id);
+    res.status(204).send();
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Failed to delete post from S3');
+  }
 });
 
 //Error Handling (Must Come After POST Request)

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const url = "api/posts/";
+// const upload = "api/uploads/"
 
 /* eslint-disable no-async-promise-executor */
 

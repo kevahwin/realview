@@ -55,3 +55,22 @@ exports.s3GetFileLink = async (id) => {
 
   return await s3.getSignedUrl("getObject", param);
 };
+
+// Delete file from S3 -
+exports.s3DeleteFile = async (id) => {
+  const s3 = new S3();
+
+  const param = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: `models/${id}.glb`,
+  };
+
+  return await s3.deleteObject(param, function(err, data) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Successfully deleted file from bucket");
+      console.log(data);
+    }
+  });
+};
