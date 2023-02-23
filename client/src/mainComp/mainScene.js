@@ -6,7 +6,7 @@ var ArcRotateCamera = require("@babylonjs/core").ArcRotateCamera;
 // var StandardMaterial = require("@babylonjs/core").StandardMaterial;
 var CubeTexture = require("@babylonjs/core").CubeTexture;
 var Ray = require("@babylonjs/core").Ray;
-var RayHelper = require("@babylonjs/core").RayHelper;
+//var RayHelper = require("@babylonjs/core").RayHelper;
 var WebXRDefaultExperience = require("@babylonjs/core").WebXRDefaultExperience;
 var EnvironmentHelper = require("@babylonjs/core").EnvironmentHelper;
 // var MeshBuilder = require("@babylonjs/core").MeshBuilder;
@@ -139,12 +139,12 @@ export class mainScene {
     const tmpRay2 = new Vector3(new Vector3(), new Vector3(), 3);
     const tmpRay3 = new Vector3(new Vector3(), new Vector3(), 3);
 
-    const rayHelper = new RayHelper(tmpRay);
-    rayHelper.show(this.scene);
-    const rayHelper2 = new RayHelper(tmpRay2);
-    rayHelper2.show(this.scene);
-    const rayHelper3 = new RayHelper(tmpRay3);
-    rayHelper3.show(this.scene);
+    // const rayHelper = new RayHelper(tmpRay);
+    // rayHelper.show(this.scene);
+    // const rayHelper2 = new RayHelper(tmpRay2);
+    // rayHelper2.show(this.scene);
+    // const rayHelper3 = new RayHelper(tmpRay3);
+    // rayHelper3.show(this.scene);
 
     let hit;
     let tmpMesh;
