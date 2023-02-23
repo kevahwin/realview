@@ -7,7 +7,7 @@ var ArcRotateCamera = require("@babylonjs/core").ArcRotateCamera;
 var CubeTexture = require("@babylonjs/core").CubeTexture;
 var Ray = require("@babylonjs/core").Ray;
 //var RayHelper = require("@babylonjs/core").RayHelper;
-var WebXRDefaultExperience = require("@babylonjs/core").WebXRDefaultExperience;
+//var WebXRDefaultExperience = require("@babylonjs/core").WebXRDefaultExperience;
 var EnvironmentHelper = require("@babylonjs/core").EnvironmentHelper;
 // var MeshBuilder = require("@babylonjs/core").MeshBuilder;
 // var Color3 = require("@babylonjs/core").Color3;
@@ -130,11 +130,26 @@ export class mainScene {
 
     //this.scene.environmentIntensity = 0.5;
 
+    // Check XR support
+    const xr = await this.scene.createDefaultXRExperienceAsync({
+      floorMeshes: [envHelper.ground],
+    });
+    if (
+      !(await xr.baseExperience.sessionManager.supportsSessionAsync(
+        "immersive-vr"
+      ))
+    ) {
+      // do WebVR instead
+      const vrHelper = this.scene.createDefaultVRExperience();
+      vrHelper.enableInteractions();
+    }
+
+    /*
     const xr = await WebXRDefaultExperience.CreateAsync(this.scene, {
       floorMeshes: [envHelper.ground],
       optionalFeatures: true,
       outputCanvas: this.scene.getEngine().getRenderingCanvas(),
-    });
+    });*/
 
     const tmpRay = new Ray(new Vector3(), new Vector3(), 3);
     const tmpRay2 = new Vector3(new Vector3(), new Vector3(), 3);
