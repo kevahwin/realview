@@ -133,6 +133,7 @@ export class mainScene {
     const xr = await WebXRDefaultExperience.CreateAsync(this.scene, {
       floorMeshes: [envHelper.ground],
       optionalFeatures: true,
+      outputCanvas: this.scene.getEngine().getRenderingCanvas(),
     });
 
     const tmpRay = new Ray(new Vector3(), new Vector3(), 3);
