@@ -8,9 +8,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const multer = require('multer');
 const morgan = require('morgan');
-// const helmet = require('helmet');
 const uploads = require('./routes/api/uploads');
 const posts = require("./routes/api/posts");
+const signup = require("./routes/api/signup");
 
 const app = express();
 
@@ -18,6 +18,7 @@ const app = express();
 * MIDDLEWARE *
 ***************/
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors());
 app.use(morgan('tiny'));
@@ -37,11 +38,14 @@ app.get('/status', (req, res) => {
   res.send('Welcome to the RealView API - Up and Running');
 });
 
-// Posts - will not be used later on
+// Posts - for displaying the 
 app.use("/api/posts", posts);
 
 // Uploaded files
 app.use("/api/uploads", uploads);
+
+// Login requests
+app.use("/api/signup", signup);
 
 // Handle production
 if (process.env.NODE_ENV === "production") {

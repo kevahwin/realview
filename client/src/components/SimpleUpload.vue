@@ -1,4 +1,5 @@
 <template>
+  <div>
     <form @submit.prevent="sendFile" enctype="multipart/form-data">
 
         <div v-if="message"
@@ -35,11 +36,11 @@
             <button class="button is-info" v-on:click="createPost" :disabled="uploading">
                 {{ uploading ? 'Uploading...' : 'Send' }}
             </button>
-            </form>
-            <hr>
-            <button @click="addAllToScene">     
+  </form>
+  <hr>
+  <button @click="addAllToScene">     
                 Display All Objects
-            </button>
+  </button>
     <p class="error" v-if="error">{{ error }}</p>
     <div class="posts-container">
       <div class="post"
@@ -52,17 +53,16 @@
         <p class="text">{{ post.text }}</p>
         <button class="addButton" v-on:click="addToScene2(post); addToScene(post)">Add To Scene</button>
       </div>
-      </div>
-            <ul>
-  <li v-for="(item, index) in items" :key="index">
-    {{ itemName }}{{ index + 1 }}
-    <button @click="addToScene(index); addToScene2(index)">Add to Scene</button>
-  </li>
-</ul>
-
+    </div>
+    <ul>
+      <li v-for="(item, index) in items" :key="index">
+        {{ itemName }}{{ index + 1 }}
+        <button @click="addToScene(index); addToScene2(index)">Add to Scene</button>
+      </li>
+    </ul>
     
     
-        
+  </div>     
 </template>
 
 <script>

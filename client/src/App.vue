@@ -1,10 +1,11 @@
 <template>
 <div>
+  <Signup />
   <NavbarComponent />
+  <!-- <SideMenuComponent /> -->
   <MainComp />
   <SimpleUpload />
-
-  
+  <!-- <router-view /> -->
 </div> 
 </template>
 
@@ -14,12 +15,15 @@
 import MainComp from './components/MainComp.vue'
 import NavbarComponent from './components/NavbarComponent.vue'
 import SimpleUpload from './components/SimpleUpload.vue'
+import Signup from './components/Signup.vue'
+// import SideMenuComponent from './components/SideMenuComponent.vue'
 
 export default {
   name: 'App',
   components: {
+    Signup,
     SimpleUpload,
-
+    // SideMenuComponent,
     MainComp,
     NavbarComponent
   }

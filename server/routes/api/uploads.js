@@ -15,7 +15,7 @@ const {
   s3GetFileLink,
   s3DeleteFile
 } = require("./s3service");
-const User = require("../../models/userModel");
+// const User = require("../../models/userModel");
 const ERROR_FILE_TYPE = "Only glb files are allowed.";
 const MAX_SIZE = 1024 * 1024 * 10; // MAX SIZE OF 100MB
 
@@ -116,7 +116,7 @@ router.post("/", upload.single("file"), async (req, res) => {
   const fileLink = await s3GetFileLink(filename);
 
   //Await a UserSchema with field objectURL and store fileLink there
-  await User.create({ objectUrl: fileLink });
+  // await User.create({ objectUrl: fileLink });
 
   //Send JSON response to check
   res.json({ file: req.file, result, fileLink });
