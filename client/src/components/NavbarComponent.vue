@@ -1,37 +1,70 @@
-
 <template>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-  <a class="navbar-brand" href="#">RealView</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Portfolio</a>
-      </li>
-      <div class="flex-grow"></div> <!-- Spacer element -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">RealView</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <router-link to="/" class="nav-link" active-class="active">Home</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/" class="nav-link" active-class="active">Portfolio</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/TeamView" class="nav-link" active-class="active">Team</router-link>
+        </li>
       </ul>
-      <div>
-        <button class="btn btn-outline-success my-2 my-sm-0" style="color: #AE98BD; border-color: #AE98BD;">Login</button>
-      </div>
-  </div>
-</nav>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <router-link to="/LoginView" class="nav-link" active-class="active">Login</router-link>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
 
+<script>
+export default {
+  name: 'SimpleNavbar',
+}
+</script>
+
 <style>
-.btn-outline-success {
-  background-color: #AE98BD;
-  color: #AE98BD;
-  border-color: #AE98BD;
+.navbar {
+  background-color: #E8EBF1;
+  padding: 1rem;
 }
 
-.btn-outline-success:hover {
-  background-color: #efdefa !important;
+.navbar-brand {
+  color: #0B3954;
+  font-weight: bold;
+  margin-right: 2rem;
+}
+
+.nav-link {
+  color: #0B3954;
+  margin: 0 1rem;
+}
+
+.active {
   color: #fff;
-  border-color: #AE98BD;
+  background-color: #0B3954 !important;
+  border-color: #0B3954 !important;
+}
+
+@media (max-width: 767px) {
+  .navbar-nav {
+    margin-top: 1rem;
+  }
+
+  .navbar-brand {
+    margin-right: 0;
+  }
+
+  .nav-link {
+    margin: 0.5rem 0;
+  }
 }
 </style>

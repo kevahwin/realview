@@ -231,23 +231,37 @@ export default {
 
 </script>
 
-<style scoped>
 
+<style scoped>
 .post {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .post p {
   margin-right: 10px;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.post p.text {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 0;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .post button {
   width: 100px;
-  border: 1px solid #AE98BD;
-  background-color: #AE98BD;
+  border: 1px solid #22324E;
+  background-color: #22324E;
+  color: #FFFFFF;
 }
 
 div.container {
@@ -256,16 +270,17 @@ div.container {
 }
 
 p.error {
-  border: 1px solid #AE98BD;
-  background-color: #AE98BD;
+  border: 1px solid #22324E;
+  background-color: #22324E;
+  color: #FFFFFF;
   padding:  10px;
   margin-bottom: 15px;
 }
 
 div.post {
   position: relative;
-  border: 0.5px solid #131313;
-  background-color:  #f6f4fd;
+  border: 0.5px solid #22324E;
+  background-color:  #E8EBF1;
   padding: 5px 10px 5px 5px;
   margin-bottom: 10px;
 }
@@ -275,15 +290,9 @@ div.created-at {
   top: 0;
   left: 0;
   padding: 5px 15px 5px 15px;
-  background-color: darkgreen;
-  color: white;
+  background-color: #22324E;
+  color: #FFFFFF;
   font-size: 13px;
-}
-
-p.text {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 0;
 }
 
 </style>

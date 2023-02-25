@@ -14,6 +14,9 @@
       </form>
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
     </div>
+    <div class="signup-button">
+      <button type="submit">Sign Up for Free!</button>
+    </div>
   </template>
   
   <script>
@@ -40,14 +43,14 @@
     }
   }
   </script>
-  
-  <style>
+  <style scoped>
   .login-form {
     max-width: 400px;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #22324E;
+    border-radius: 5px;
+    background-color: #fff;
   }
   
   .form-group {
@@ -57,6 +60,8 @@
   label {
     display: block;
     margin-bottom: 0.5rem;
+    color: #22324E;
+    font-weight: bold;
   }
   
   input[type="text"],
@@ -64,8 +69,8 @@
     display: block;
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #22324E;
+    border-radius: 5px;
     font-size: 1rem;
   }
   
@@ -73,16 +78,22 @@
     display: block;
     margin: 0 auto;
     padding: 0.5rem 1rem;
-    border-radius: 4px;
+    border-radius: 5px;
     font-size: 1rem;
-    background-color: #007bff;
+    background-color: #22324E;
     color: #fff;
     border: none;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #304C5A;
+    transform: scale(1.1);
   }
   
   .error-message {
     color: red;
     margin-top: 1rem;
+    text-align: center;
   }
   </style>
-  
