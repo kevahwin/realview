@@ -2,7 +2,8 @@
     <div>
       <NavbarComponent />
       <MainComp />
-      <SimpleUpload />
+      <SimpleUpload />  
+      <!-- <ToolBar /> -->
   
       
     </div>
@@ -15,14 +16,15 @@
   import MainComp from '../components/MainComp.vue'
   import NavbarComponent from '../components/NavbarComponent.vue'
   import SimpleUpload from '../components/SimpleUpload.vue'
+  // import ToolBar from '../components/ToolBar.vue'
   
   export default {
     name: 'App',
     components: {
-      SimpleUpload,
-
       MainComp,
-      NavbarComponent
+      NavbarComponent,
+      SimpleUpload
+      // ToolBar,
     }
   }
   </script>
