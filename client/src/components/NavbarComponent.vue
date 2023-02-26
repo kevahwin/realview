@@ -50,7 +50,7 @@ export default {
 
 .active {
   color: #fff;
-  background-color: #0B3954 !important;
+  color: #0B3954 !important;
   border-color: #0B3954 !important;
 }
 
