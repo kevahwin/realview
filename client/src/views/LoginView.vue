@@ -1,30 +1,34 @@
 <template>
-  <div class="login-form">
-    <h1>Login</h1>
-    <form @submit.prevent="submitForm">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" v-model="username" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <div class="password-container">
-          <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" required>
-          <button type="button" class="password-toggle" @click="togglePassword">
-            {{ showPassword ? 'Hide' : 'Show' }}
-          </button>
+  <div>
+    <NavbarComponent /> 
+    <div class="login-form">
+      <h1>Login</h1>
+      <form @submit.prevent="submitForm">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" v-model="username" required>
         </div>
-      </div>
-      <button type="submit" class="login-button">Log in</button>
-    </form>
-    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-  </div>
-  <div class="signup-button">
-    <router-link to="/SignUpView" class="login-button">Sign Up for Free!</router-link>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <div class="password-container">
+            <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" required>
+            <button type="button" class="password-toggle" @click="togglePassword">
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="login-button">Log in</button>
+      </form>
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </div>
+    <div class="signup-button">
+      <router-link to="/SignUpView" class="login-button">Sign Up for Free!</router-link>
+    </div>
   </div>
 </template>
 
 <script>
+import NavbarComponent from '../components/NavbarComponent.vue'
 export default {
   data() {
     return {
@@ -49,7 +53,10 @@ export default {
     togglePassword() {
       this.showPassword = !this.showPassword;
     }
-  }
+  },
+  components: {
+      NavbarComponent
+    }
 }
 </script>
 

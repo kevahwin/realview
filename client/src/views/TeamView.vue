@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <NavbarComponent />
     <div class="team-container">
       <h1>Our Team</h1>
       <div class="team-members">
@@ -8,9 +10,11 @@
         </div>
       </div>
     </div>
+  </div>
   </template>
   
   <script>
+  import NavbarComponent from '../components/NavbarComponent.vue'
   export default {
     data() {
       return {
@@ -54,6 +58,9 @@
         ],
       };
     },
+    components: {
+      NavbarComponent
+    }
   };
   </script>
 
