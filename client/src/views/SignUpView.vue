@@ -1,36 +1,38 @@
 <template>
-  <div class="signup-form">
-    <h1>Sign Up</h1>
-    <form @submit.prevent="submitForm">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" v-model="username" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <div class="password-container">
-          <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" required>
-          <button type="button" class="password-toggle" @click="togglePassword">
-            {{ showPassword ? 'Hide' : 'Show' }}
-          </button>
+  <div>
+    <div class="signup-form">
+      <h1>Sign Up</h1>
+      <form @submit.prevent="submitForm">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" v-model="username" required>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password:</label>
-        <div class="password-container">
-          <input id="confirmPassword" v-model="confirmPassword" :type="showConfirmPassword ? 'text' : 'password'" required>
-          <button type="button" class="password-toggle" @click="toggleConfirmPassword">
-            {{ showConfirmPassword ? 'Hide' : 'Show' }}
-          </button>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" v-model="email" required>
         </div>
-      </div>
-      <button type="submit" class="login-button">Sign up</button>
-    </form>
-    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <div class="password-container">
+            <input id="password" v-model="password" :type="showPassword ? 'text' : 'password'" required>
+            <button type="button" class="password-toggle" @click="togglePassword">
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password:</label>
+          <div class="password-container">
+            <input id="confirmPassword" v-model="confirmPassword" :type="showConfirmPassword ? 'text' : 'password'" required>
+            <button type="button" class="password-toggle" @click="toggleConfirmPassword">
+              {{ showConfirmPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="login-button">Sign up</button>
+      </form>
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </div>
   </div>
 </template>
 
