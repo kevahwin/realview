@@ -11,6 +11,9 @@ const morgan = require('morgan');
 // const helmet = require('helmet');
 const uploads = require('./routes/api/uploads');
 const posts = require("./routes/api/posts");
+const signup = require("./routes/api/signup");
+const userlogin = require("./routes/api/login");
+const user = require("./routes/api/user");
 
 const app = express();
 
@@ -42,6 +45,15 @@ app.use("/api/posts", posts);
 
 // Uploaded files
 app.use("/api/uploads", uploads);
+
+// Sign up requests
+app.use("/api/signup", signup);
+
+// Logging in
+app.use("/api/login", userlogin);
+
+// Logging in
+app.use("/api/user", user);
 
 // Handle production
 if (process.env.NODE_ENV === "production") {

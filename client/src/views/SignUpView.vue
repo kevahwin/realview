@@ -5,8 +5,12 @@
       <h1>Sign Up</h1>
       <form @submit.prevent="submitForm">
         <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" id="username" v-model="username" required>
+          <label for="firstName">First name:</label>
+          <input type="text" id="firstName" v-model="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last name:</label>
+          <input type="text" id="lastName" v-model="lastName" required>
         </div>
         <div class="form-group">
           <label for="email">Email:</label>
@@ -39,10 +43,12 @@
 
 <script>
 import NavbarComponent from '../components/NavbarComponent.vue'
+import axios from 'axios'
 export default {
   data() {
     return {
-      username: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -53,13 +59,30 @@ export default {
   },
   methods: {
     submitForm() {
-      if (this.username && this.email && this.password && this.confirmPassword && this.password === this.confirmPassword) {
+      if (this.firstName && this.lastName && this.email && this.password && this.confirmPassword && this.password === this.confirmPassword) {
         // Successful sign-up, do something like redirect to another page
+        this.signup();
         alert('Thank you for signing up!')
       } else {
         // Incomplete fields or passwords don't match, display an error message
         this.errorMessage = !this.password ? 'Please enter a password.' : !this.confirmPassword ? 'Please confirm your password.' : 'Passwords do not match.'
       }
+    },
+    signup() {
+      let newUser = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password
+      }
+      axios.post('/api/signup', newUser)
+        .then(res => {
+          console.log(res);
+          this.error = '';
+        }, err => {
+          console.log(err.response);
+          this.error = err.response.data.error;
+        })
     },
     togglePassword() {
       this.showPassword = !this.showPassword;
