@@ -21,6 +21,7 @@ const app = express();
 * MIDDLEWARE *
 ***************/
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors());
 app.use(morgan('tiny'));

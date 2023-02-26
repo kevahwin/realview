@@ -4,7 +4,9 @@
         <button class="logout-button" @click="logout">Logout</button>
       </div>
       <NavbarComponent />
+      <h1>Hello, {{ firstName }}!</h1>
       <MainComp />
+
       <SimpleUpload />  
       <!-- <ToolBar /> -->
   
@@ -15,7 +17,7 @@
   
   <script>
   
-  
+  import axios from 'axios'
   import MainComp from '../components/MainComp.vue'
   import NavbarComponent from '../components/NavbarComponent.vue'
   import SimpleUpload from '../components/SimpleUpload.vue'
@@ -30,11 +32,23 @@
       SimpleUpload
       // ToolBar,
     },
+    data() {
+      return {
+        firstName: ''
+      }
+    },
     created() {
       // User is not authorised
       if (localStorage.getItem('token') === null) {
         router.push('LoginView');
       }
+    },
+    mounted() {
+      axios.get('/api/user', { headers: { token: localStorage.getItem('token') } })
+        .then(res => {
+          console.log(res);
+          this.firstName = res.data.user.firstName;
+        })
     },
     methods: {
       logout() {

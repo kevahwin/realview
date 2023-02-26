@@ -30,7 +30,7 @@ router.post('/', (req, res, next) => {
             })
         }
         // If all good, create token and send to frontend
-        let token = jwt.sign({ userId: bodyParser.urlencoded._id }, 'secretkey',);
+        let token = jwt.sign({ userId: user._id }, 'secretkey',);
         // console.log(token);
         return res.status(200).json({
             title: 'Login success',
