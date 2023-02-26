@@ -10,7 +10,7 @@
           <router-link to="/" class="nav-link" active-class="active">Home</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/" class="nav-link" active-class="active">Portfolio</router-link>
+          <router-link to="/CanvasView" class="nav-link" active-class="active">Portfolio</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/TeamView" class="nav-link" active-class="active">Team</router-link>
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'SimpleNavbar',
+  name: 'NavbarComponent',
 }
 </script>
 
@@ -65,6 +65,28 @@ export default {
 
   .nav-link {
     margin: 0.5rem 0;
+  }
+
+  /* Added styles */
+  .navbar-toggler {
+    border: none;
+    outline: none;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+
+  .navbar-collapse {
+    background-color: #E8EBF1;
+    border-top: 1px solid #ddd;
+  }
+
+  .navbar-nav .nav-item {
+    border-bottom: 1px solid #ddd;
+    margin: 0;
+    width: 100%;
+    text-align: center;
   }
 }
 </style>
