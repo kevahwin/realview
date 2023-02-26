@@ -4,9 +4,15 @@ import LoginView from '../views/LoginView.vue'
 import LandingView from '../views/LandingView.vue'
 import CanvasView from '../views/CanvasView.vue'
 import TeamView from '../views/TeamView.vue'
+import SignUpView from '../views/SignUpView.vue'
 
 
 const routes = [
+    {
+        path: '/SignUpView',
+        name: 'SignUpView',
+        component: SignUpView
+    },
     {
         path: '/TeamView',
         name: 'TeamView',

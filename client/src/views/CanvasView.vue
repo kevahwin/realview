@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app-container">
       <NavbarComponent />
       <MainComp />
       <router-link to="/LoginView">
@@ -22,6 +22,12 @@
   </script>
   
   <style scoped>
+  .app-container {
+    background-color: #ffffff;
+    height: 100vh;
+    width: 100vw;
+  }
+  
   .btn-primary {
     background-color: #22324E;
     color: #fff;
