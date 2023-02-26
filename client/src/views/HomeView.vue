@@ -1,5 +1,8 @@
 <template>
     <div>
+      <div class="logout-button">
+        <button class="logout-button" @click="logout">Logout</button>
+      </div>
       <NavbarComponent />
       <MainComp />
       <SimpleUpload />  
@@ -16,6 +19,7 @@
   import MainComp from '../components/MainComp.vue'
   import NavbarComponent from '../components/NavbarComponent.vue'
   import SimpleUpload from '../components/SimpleUpload.vue'
+  import router from '../router/index.js'
   // import ToolBar from '../components/ToolBar.vue'
   
   export default {
@@ -25,11 +29,34 @@
       NavbarComponent,
       SimpleUpload
       // ToolBar,
+    },
+    created() {
+      // User is not authorised
+      if (localStorage.getItem('token') === null) {
+        router.push('LoginView');
+      }
+    },
+    methods: {
+      logout() {
+        localStorage.clear();
+        router.push('LoginView')
+      }
     }
   }
   </script>
   
   <style>
+  .logout-button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  border-radius: 0px;
+  font-size: 1rem;
+  background-color: #22324E;
+  color: #fff;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

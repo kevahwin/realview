@@ -43,6 +43,7 @@
 
 <script>
 import NavbarComponent from '../components/NavbarComponent.vue'
+import router from '../router/index.js'
 import axios from 'axios'
 export default {
   data() {
@@ -63,6 +64,7 @@ export default {
         // Successful sign-up, do something like redirect to another page
         this.signup();
         alert('Thank you for signing up!')
+        router.push('LoginView');
       } else {
         // Incomplete fields or passwords don't match, display an error message
         this.errorMessage = !this.password ? 'Please enter a password.' : !this.confirmPassword ? 'Please confirm your password.' : 'Passwords do not match.'

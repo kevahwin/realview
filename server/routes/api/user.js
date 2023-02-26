@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Getting user information
 router.get('/', (req, res, next) => {
-    let token = req.headers.token; // token set in frontend
+    let token = req.headers.token; // Token set in frontend
     jwt.verify(token, 'secretkey', (err, decoded) => {
         if (err) return res.status(401).json({
             title: 'Unauthorised'

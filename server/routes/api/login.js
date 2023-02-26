@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/', (req, res, next) => {
     // Checking if user exists using email address
     User.findOne({ email: req.body.email }, (err, user) => {
-        console.log(user);
+        // console.log(user);
         if (err) return res.status(500).json({
             title: 'server error',
             error: err
@@ -31,8 +31,9 @@ router.post('/', (req, res, next) => {
         }
         // If all good, create token and send to frontend
         let token = jwt.sign({ userId: bodyParser.urlencoded._id }, 'secretkey',);
+        // console.log(token);
         return res.status(200).json({
-            title: 'login success',
+            title: 'Login success',
             token: token
         })
     })

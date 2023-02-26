@@ -29,6 +29,7 @@
   
   <script>
   import NavbarComponent from '../components/NavbarComponent.vue'
+  import router from '../router/index.js'
   import axios from 'axios'
   export default {
     data() {
@@ -41,7 +42,7 @@
     methods: {
       submitForm() {
         this.login();
-        alert('You are logged in!')
+        // alert('You are logged in!');
       },
       login() {
         let user = {
@@ -50,14 +51,17 @@
         }
         axios.post('/api/login', user)
           .then(res => {
-            if (res.status === '200') {
+            console.log(res);
+            if (res.status === 200) {
               localStorage.setItem('token', res.data.token);
               console.log(res)
+              router.push('/HomeView');
             }
-          }, err => {
+          })
+          .catch(err => {
             console.log(err.response);
             this.error = err.response.data.error;
-          })
+          });
       },
       togglePassword() {
         this.showPassword = !this.showPassword;
