@@ -51,5 +51,12 @@
   right: 20px;
   z-index: 9999;
 }
-  </style>
+
+@media (max-width: 767px) {
+  .btn-primary {
+    font-size: 16px;
+    padding: 6px 15px;
+  }
+}
+</style>
   
