@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavbarComponent />
     <div class="signup-form">
       <h1>Sign Up</h1>
       <form @submit.prevent="submitForm">
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+import NavbarComponent from '../components/NavbarComponent.vue'
 export default {
   data() {
     return {
@@ -65,6 +67,9 @@ export default {
     toggleConfirmPassword() {
       this.showConfirmPassword = !this.showConfirmPassword;
     }
+  },
+  components: {
+      NavbarComponent
   }
 }
 </script>
