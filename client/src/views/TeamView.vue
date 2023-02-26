@@ -17,7 +17,7 @@
         teamMembers: [
           {
             id: 1,
-            name: "Kirill Sackharov",
+            name: "Kirill Sakharov",
             description:
               "Kirill holds a BSc in Management from LSE and is currently pursuing an MSc in Computing at Imperial College.",
           },
