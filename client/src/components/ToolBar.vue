@@ -26,6 +26,7 @@
               icon="mdi-refresh"
               @click="onRefreshClick"
               ></v-btn>
+              <button class="logout-button" @click="logout">Logout</button>
             </template>
           </v-list-item>
 
@@ -38,6 +39,7 @@
 </template>
   
   <script>
+  import router from '../router/index.js'
   import SimpleUpload from './SimpleUpload.vue';
   
   export default {
@@ -54,6 +56,10 @@
     methods: {
        onRefreshClick() {
         location.reload();
+      },
+      logout() {
+      localStorage.clear();
+      router.push('LoginView')
       },
     },
 };
