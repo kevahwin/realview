@@ -3,7 +3,10 @@
       <NavbarComponent />
       <MainComp />
       <router-link to="/LoginView">
-        <button class="btn btn-primary float-button">Login to upload files</button>
+        <div class="centered">
+          <button class="btn btn-primary float-button">Login to upload files</button>
+        </div>
+        
       </router-link>
     </div>
   </template>
@@ -47,9 +50,15 @@
 
   .float-button {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 15px;
+  right: 40%;
+  left: 40%;
   z-index: 9999;
+}
+.centered{
+  position: relative;
+  left: auto;
+  right: auto;
 }
 
 @media (max-width: 767px) {
@@ -57,6 +66,14 @@
     font-size: 16px;
     padding: 6px 15px;
   }
+
+  .float-button {
+  position: fixed;
+  bottom: 15px;
+  right: 20%;
+  left: 20%;
+  z-index: 9999;
+}
 }
 </style>
   
