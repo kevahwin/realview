@@ -15,6 +15,7 @@
             title="Uploads"
             nav
           >
+            <p for="name" class="nametag">Hello, {{ firstName }}!</p>
             <template v-slot:append>
               <v-btn
                 variant="text"
@@ -39,6 +40,7 @@
 </template>
   
   <script>
+  import axios from 'axios'
   import router from '../router/index.js'
   import SimpleUpload from './SimpleUpload.vue';
   
@@ -51,7 +53,15 @@
       return {
         drawer: true,
         rail: true,
+        firstName: ''
       }
+    },
+    mounted() {
+    axios.get('/api/user', { headers: { token: localStorage.getItem('token') } })
+      .then(res => {
+        console.log(res);
+        this.firstName = res.data.user.firstName;
+      })
     },
     methods: {
        onRefreshClick() {
@@ -74,6 +84,18 @@
 }
 .rail {
   overflow-y: auto !important;
+}
+.nametag{
+  position: inherit;
+  float: left;
+}
+@media (max-width: 767px) {
+  .nametag{
+    font-size: 0.8rem;
+}
+.v-list-item--nav .v-list-item-title{
+  font-size: 1rem;
+}
 }
 </style>
 

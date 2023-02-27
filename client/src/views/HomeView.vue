@@ -4,7 +4,7 @@
       <button class="logout-button" @click="logout">Logout</button>
     </div> -->
     <NavbarComponent />
-    <h1>Hello, {{ firstName }}!</h1>
+    <!-- <h1>Hello, {{ firstName }}!</h1> -->
     <MainComp />
 
     <!-- <SimpleUpload />   -->
