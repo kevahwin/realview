@@ -11,6 +11,7 @@
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@babylonjs/core": "^5.43.0",
+    "@babylonjs/gui": "^5.48.0",
     "@babylonjs/loaders": "^5.46.0",
     "@popperjs/core": "^2.11.6",
     "@vue/cli": "^5.0.8",
