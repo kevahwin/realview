@@ -12,12 +12,12 @@ import {
   EnvironmentHelper,
   WebXRDefaultExperience,
   ArcRotateCamera,
-  /*StandardMaterial,*/ /*CubeTexture,*/
+  /*StandardMaterial,*/ CubeTexture,
   Ray,
   RayHelper,
   /*SceneLoader,*/
-  PBRMaterial,
-  Texture,
+  /*PBRMaterial,
+  Texture,*/
   SpotLight,
   DirectionalLight,
 } from "@babylonjs/core";
@@ -112,12 +112,12 @@ export class mainScene {
 
     hemiLight.intensity = 0;
 
-    // const envTex = CubeTexture.CreateFromPrefilteredData(
-    //   "./environment/sky.env",
-    //   this.scene
-    // );
-    // this.scene.environmentTexture = envTex;
-    // this.scene.createDefaultSkybox(envTex, true);
+    const envTex = CubeTexture.CreateFromPrefilteredData(
+      "./environment/sky.env",
+      this.scene
+    );
+    this.scene.environmentTexture = envTex;
+    this.scene.createDefaultSkybox(envTex, true);
 
     // SceneLoader.ImportMeshAsync("", "./models/", "white-room1.glb").then(
     //   (result2) => {
@@ -293,26 +293,26 @@ export class mainScene {
     envHelper.ground.visibility = true;
     //envHelper.ground.scaling = new Vector3(, 2.1, 2.1);
 
-    const pbr = new PBRMaterial("pbr", this.scene);
-    pbr.albedoTexture = new Texture(
-      "./textures/mud/brown_mud_diffuse.jpeg",
-      this.scene
-    );
-    pbr.bumpTexture = new Texture(
-      "./textures/mud/brown_mud_normal.jpeg",
-      this.scene
-    );
-    pbr.invertNormalMapX = true;
-    pbr.invertNormalMapY = true;
+    // const pbr = new PBRMaterial("pbr", this.scene);
+    // pbr.albedoTexture = new Texture(
+    //   "./textures/mud/brown_mud_diffuse.jpeg",
+    //   this.scene
+    // );
+    // pbr.bumpTexture = new Texture(
+    //   "./textures/mud/brown_mud_normal.jpeg",
+    //   this.scene
+    // );
+    // pbr.invertNormalMapX = true;
+    // pbr.invertNormalMapY = true;
 
-    pbr.useAmbientOcclusionFromMetallicTextureRed = true;
+    // pbr.useAmbientOcclusionFromMetallicTextureRed = true;
 
-    pbr.useRoughnessFromMetallicTextureGreen = true;
+    // pbr.useRoughnessFromMetallicTextureGreen = true;
 
-    pbr.useMetallnessFromMetallicTextureBlue = true;
+    // pbr.useMetallnessFromMetallicTextureBlue = true;
 
-    pbr.roughness = 0.9;
-    envHelper.ground.material = pbr;
+    // pbr.roughness = 0.9;
+    // envHelper.ground.material = pbr;
 
     //const skybox = (this.scene).createDefaultSkybox(envTex, true);
 
