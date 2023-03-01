@@ -119,15 +119,15 @@ export class mainScene {
     this.scene.environmentTexture = envTex;
     this.scene.createDefaultSkybox(envTex, true);
 
-    SceneLoader.ImportMeshAsync("", "./models/", "white-room1.glb").then(
-      (result2) => {
-        result2.meshes.forEach((mesh) => {
-          mesh.scaling = new Vector3(2, 2, 2);
-          mesh.position.y = -0.7;
-          mesh.isPickable = false;
-        });
-      }
-    );
+    // SceneLoader.ImportMeshAsync("", "./models/", "white-room1.glb").then(
+    //   (result2) => {
+    //     result2.meshes.forEach((mesh) => {
+    //       mesh.scaling = new Vector3(2, 2, 2);
+    //       mesh.position.y = -0.7;
+    //       mesh.isPickable = false;
+    //     });
+    //   }
+    // );
 
     // // Import radial GUI from Dropbox.
     // var radialGuiImportResult = await SceneLoader.ImportMeshAsync("", "https://dl.dropbox.com/s/5gw2ibz1k6p6r17/radialGuiWithIcons.glb", "radialGuiWithIcons.glb", this.scene);
@@ -324,91 +324,91 @@ export class mainScene {
     });
 
     // let parentMesh;
-    SceneLoader.ImportMeshAsync("", "./models/", "Barrel_01.glb").then(
-      (result) => {
-        console.log("result.meshes", result.meshes);
-        // result.meshes[0].position.x = 5;
-        // result.meshes[1].isPickable = true;
+    // SceneLoader.ImportMeshAsync("", "./models/", "Barrel_01.glb").then(
+    //   (result) => {
+    //     console.log("result.meshes", result.meshes);
+    //     // result.meshes[0].position.x = 5;
+    //     // result.meshes[1].isPickable = true;
 
-        //Create a parent mesh and set imported meshes as children
-        // parentMesh = new Mesh("parentMesh", this.scene);
-        // for (let i = 1; i < result.meshes.length; i++) {
-        //   result.meshes[i].position.x = 5;
-        //   result.meshes[i].isPickable = true;
-        //   result.meshes[i].setParent(parentMesh);
-        // }
+    //     //Create a parent mesh and set imported meshes as children
+    //     // parentMesh = new Mesh("parentMesh", this.scene);
+    //     // for (let i = 1; i < result.meshes.length; i++) {
+    //     //   result.meshes[i].position.x = 5;
+    //     //   result.meshes[i].isPickable = true;
+    //     //   result.meshes[i].setParent(parentMesh);
+    //     // }
 
-        var overrideMaterialSideOrientation = false;
-        for (var i = 0; i < result.meshes.length; i++) {
-          result.meshes[i].overrideMaterialSideOrientation =
-            overrideMaterialSideOrientation;
-        }
+    //     var overrideMaterialSideOrientation = false;
+    //     for (var i = 0; i < result.meshes.length; i++) {
+    //       result.meshes[i].overrideMaterialSideOrientation =
+    //         overrideMaterialSideOrientation;
+    //     }
 
-        for (i = 1; i < result.meshes.length; i++) {
-          result.meshes[i].overrideMaterialSideOrientation =
-            overrideMaterialSideOrientation;
-          var vertexData = VertexData.ExtractFromMesh(result.meshes[i]);
-          var positions = vertexData.positions;
+    //     for (i = 1; i < result.meshes.length; i++) {
+    //       result.meshes[i].overrideMaterialSideOrientation =
+    //         overrideMaterialSideOrientation;
+    //       var vertexData = VertexData.ExtractFromMesh(result.meshes[i]);
+    //       var positions = vertexData.positions;
 
-          if (!positions) {
-            console.log("Mesh ", i, " is missing position data");
-          }
+    //       if (!positions) {
+    //         console.log("Mesh ", i, " is missing position data");
+    //       }
 
-          console.log(
-            "Positions for ",
-            i,
-            "which is ",
-            result.meshes[i].name,
-            "are: ",
-            positions
-          );
-        }
+    //       console.log(
+    //         "Positions for ",
+    //         i,
+    //         "which is ",
+    //         result.meshes[i].name,
+    //         "are: ",
+    //         positions
+    //       );
+    //     }
 
-        const mergedMesh = Mesh.MergeMeshes(
-          result.meshes.slice(1),
-          true,
-          true,
-          null,
-          false,
-          true
-        );
-        mergedMesh.isPickable = true;
-        mergedMesh.position = new Vector3(0, 0.3, 0);
-        mergedMesh.receiveShadows = true;
+    //     const mergedMesh = Mesh.MergeMeshes(
+    //       result.meshes.slice(1),
+    //       true,
+    //       true,
+    //       null,
+    //       false,
+    //       true
+    //     );
+    //     mergedMesh.isPickable = true;
+    //     mergedMesh.position = new Vector3(0, 0.3, 0);
+    //     mergedMesh.receiveShadows = true;
 
-        shadowGen.getShadowMap().renderList.push(mergedMesh);
-        shadowGen.addShadowCaster(mergedMesh);
+    //     shadowGen.getShadowMap().renderList.push(mergedMesh);
+    //     shadowGen.addShadowCaster(mergedMesh);
 
-        shadowGen2.getShadowMap().renderList.push(mergedMesh);
-        shadowGen2.addShadowCaster(mergedMesh);
+    //     shadowGen2.getShadowMap().renderList.push(mergedMesh);
+    //     shadowGen2.addShadowCaster(mergedMesh);
 
-        envHelper.ground.receiveShadows = true;
+    //     envHelper.ground.receiveShadows = true;
 
-        //shadowGen.addShadowCaster(mergedMesh);
+    //     //shadowGen.addShadowCaster(mergedMesh);
 
-        // console.log("mergedMesh", mergedMesh.metadata);
+    //     // console.log("mergedMesh", mergedMesh.metadata);
 
-        // var positionsDefined = false;
-        // for (var i = 0; i < result.meshes.length; i++) {
-        //   if (result.meshes[i].geometry && result.meshes[i].getVerticesData(VertexBuffer.PositionKind)) {
-        //     positionsDefined = true;
-        //     break;
-        //   }
-        // }
-        // if (positionsDefined) {
-        //   var mergedMesh = Mesh.MergeMeshes(result.meshes, true);
-        //   mergedMesh.position.x = 10;
-        // } else {
-        //   console.log("Positions are not defined for one or more meshes");
-        // }
+    //     // var positionsDefined = false;
+    //     // for (var i = 0; i < result.meshes.length; i++) {
+    //     //   if (result.meshes[i].geometry && result.meshes[i].getVerticesData(VertexBuffer.PositionKind)) {
+    //     //     positionsDefined = true;
+    //     //     break;
+    //     //   }
+    //     // }
+    //     // if (positionsDefined) {
+    //     //   var mergedMesh = Mesh.MergeMeshes(result.meshes, true);
+    //     //   mergedMesh.position.x = 10;
+    //     // } else {
+    //     //   console.log("Positions are not defined for one or more meshes");
+    //     // }
 
-        // console.log("meshes length", result.meshes.length);
+    //     // console.log("meshes length", result.meshes.length);
 
-        // const mergedMesh = Mesh.MergeMeshes(result.meshes);
-        // console.log("merged.meshes", mergedMesh);
-        // console.log("mergedMesh", mergedMesh);
-      }
-    );
+    //     // const mergedMesh = Mesh.MergeMeshes(result.meshes);
+    //     // console.log("merged.meshes", mergedMesh);
+    //     // console.log("mergedMesh", mergedMesh);
+    //   }
+    // );
 
     const tmpRay = new Ray(new Vector3(), new Vector3(), 3);
     const tmpRay2 = new Ray(new Vector3(), new Vector3(), 3);
