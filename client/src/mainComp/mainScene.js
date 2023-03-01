@@ -3,8 +3,8 @@ import {
   GizmoManager,
   LightGizmo,
   TransformNode,
-  VertexData,
-  /*VertexBuffer,*/ Mesh,
+  /*VertexData,*/
+  /*VertexBuffer,*/ /*Mesh,*/
   Scene,
   Engine,
   /*Color3,*/ Vector3,
@@ -12,10 +12,10 @@ import {
   EnvironmentHelper,
   WebXRDefaultExperience,
   ArcRotateCamera,
-  /*StandardMaterial,*/ CubeTexture,
+  /*StandardMaterial,*/ /*CubeTexture,*/
   Ray,
   RayHelper,
-  SceneLoader,
+  /*SceneLoader,*/
   PBRMaterial,
   Texture,
   SpotLight,
@@ -112,12 +112,12 @@ export class mainScene {
 
     hemiLight.intensity = 0;
 
-    const envTex = CubeTexture.CreateFromPrefilteredData(
-      "./environment/sky.env",
-      this.scene
-    );
-    this.scene.environmentTexture = envTex;
-    this.scene.createDefaultSkybox(envTex, true);
+    // const envTex = CubeTexture.CreateFromPrefilteredData(
+    //   "./environment/sky.env",
+    //   this.scene
+    // );
+    // this.scene.environmentTexture = envTex;
+    // this.scene.createDefaultSkybox(envTex, true);
 
     // SceneLoader.ImportMeshAsync("", "./models/", "white-room1.glb").then(
     //   (result2) => {
@@ -224,7 +224,7 @@ export class mainScene {
     );
     spotLight.intensity = 100;
     spotLight.shadowEnabled = true;
-    const shadowGen = new ShadowGenerator(2048, spotLight);
+    // const shadowGen = new ShadowGenerator(2048, spotLight);
 
     const lightGizmo = new LightGizmo();
     lightGizmo.scaleRatio = 4;
@@ -243,7 +243,7 @@ export class mainScene {
     );
     directionalLight.shadowEnabled = true;
     directionalLight.position = new Vector3(100, 50, 85);
-    const shadowGen2 = new ShadowGenerator(2048, directionalLight);
+    // const shadowGen2 = new ShadowGenerator(2048, directionalLight);
 
     // const lightGizmo2 = new LightGizmo();
     // lightGizmo2.scaleRatio = 2;
