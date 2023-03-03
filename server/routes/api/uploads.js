@@ -111,15 +111,15 @@ router.post("/", upload.single("file"), async (req, res) => {
   //Upload the file
   const result = await s3Uploadv2(req.file);
 
-  //Get the fileLink (Hardcoded now - should be dynamic in future from req.file.location)
-  const filename = "item";
-  const fileLink = await s3GetFileLink(filename);
+  // //Get the fileLink (Hardcoded now - should be dynamic in future from req.file.location)
+  // const filename = "item";
+  // const fileLink = await s3GetFileLink(filename);
 
-  //Await a UserSchema with field objectURL and store fileLink there
-  await User.create({ objectUrl: fileLink });
+  // //Await a UserSchema with field objectURL and store fileLink there
+  // await User.create({ objectUrl: fileLink });
 
   //Send JSON response to check
-  res.json({ file: req.file, result, fileLink });
+  res.json({ file: req.file, result });
 });
 
 //GET list of all uploads from S3
