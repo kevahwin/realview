@@ -19,7 +19,7 @@ async function setInitialPostId() {
     const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
     post_id = maxPostId.post_id;
   } else {
-    post_id = 0;
+    post_id = 1;
   }
 }
 
@@ -37,8 +37,10 @@ router.post("/", async (req, res) => {
     let post_id = 0;
   }*/
   const posts = await loadPostsCollection();
-  const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
-  post_id = maxPostId.post_id + 1;
+  if (await checkForPosts()) {
+    const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
+    post_id = maxPostId.post_id + 1;
+  }
   //post_id += 1;
   await posts.insertOne({
     text: req.body.text,
