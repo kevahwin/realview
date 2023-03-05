@@ -32,8 +32,9 @@ setInitialPostId();
 //Upload file to s3
 exports.s3Uploadv2 = async (file) => {
   const s3 = new S3();
-
-  post_id += 1;
+  max_id = await getMaxPostId();
+  post_id = max_id + 1;
+  //post_id += 1;
   let key = `models/${post_id}.glb`;
   if (file.originalname.endsWith(".obj")) {
     key = `models/${post_id}.obj`;

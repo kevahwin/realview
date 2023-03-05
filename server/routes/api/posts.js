@@ -37,7 +37,9 @@ router.post("/", async (req, res) => {
     let post_id = 0;
   }*/
   const posts = await loadPostsCollection();
-  post_id += 1;
+  const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
+  post_id = maxPostId.post_id + 1;
+  //post_id += 1;
   await posts.insertOne({
     text: req.body.text,
     createdAt: new Date(),
