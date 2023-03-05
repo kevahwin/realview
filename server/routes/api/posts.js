@@ -1,9 +1,29 @@
 const express = require("express");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const mongodb = require("mongodb");
 const dotenv = require("dotenv").config();
 
 const router = express.Router();
+
+async function checkForPosts() {
+  const posts = await loadPostsCollection();
+  const postCount = await posts.countDocuments();
+  return postCount > 0;
+}
+
+let post_id;
+
+async function setInitialPostId() {
+  if (await checkForPosts()) {
+    const posts = await loadPostsCollection();
+    const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
+    post_id = maxPostId.post_id;
+  } else {
+    post_id = 0;
+  }
+}
+
+setInitialPostId();
 
 // Get Posts
 router.get("/", async (req, res) => {
@@ -11,9 +31,11 @@ router.get("/", async (req, res) => {
   res.send(await posts.find({}).toArray());
 });
 
-let post_id = 0;
 // Add Post
 router.post("/", async (req, res) => {
+  /* if (!(await checkForPosts())) {
+    let post_id = 0;
+  }*/
   const posts = await loadPostsCollection();
   post_id += 1;
   await posts.insertOne({
@@ -30,18 +52,15 @@ router.delete("/:id", async (req, res) => {
   const posts = await loadPostsCollection();
 
   await posts.deleteOne({ _id: new mongodb.ObjectId(req.params.id) });
-  console.log('Deleted file data from MongoDB...')
+  console.log("Deleted file data from MongoDB...");
   res.status(200).send({});
 });
 
 async function loadPostsCollection() {
-  const client = await mongodb.MongoClient.connect(
-    process.env.MONGODB_URI,
-    {
-      useNewUrlParser: true,
-    }
-  );
- 
+  const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+  });
+
   return client.db("vue_express").collection("posts");
 }
 
