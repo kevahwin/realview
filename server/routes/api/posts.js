@@ -76,6 +76,8 @@ async function loadPostsCollection() {
 module.exports = router;
 module.exports.post_id = post_id;
 module.exports.loadPostsCollection = loadPostsCollection;
+module.exports.setInitialPostId = setInitialPostId;
+module.exports.checkForPosts = checkForPosts;
 
 //module.exports = router;
 

@@ -3,6 +3,8 @@ const multer = require("multer");
 //const { post_id } = require("./posts.js");
 const { loadPostsCollection } = require("./posts.js");
 
+const { checkForPosts } = require("./posts.js");
+
 // Get the highest post_id in the S3 bucket
 
 /*async function getMaxPostId() {
@@ -21,13 +23,19 @@ const { loadPostsCollection } = require("./posts.js");
 
   return maxPostId;
 }
+*/
 
 async function setInitialPostId() {
-  post_id = await getMaxPostId();
+  if (await checkForPosts()) {
+    const posts = await loadPostsCollection();
+    const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
+    post_id = maxPostId.post_id;
+  } else {
+    post_id = 1;
+  }
 }
 
 setInitialPostId();
-*/
 
 // Set the initial value of post_id based on the highest post_id in the S3 bucket
 
