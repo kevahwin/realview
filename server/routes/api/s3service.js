@@ -1,8 +1,11 @@
 const { S3 } = require("aws-sdk");
 const multer = require("multer");
+//const { post_id } = require("./posts.js");
+const { loadPostsCollection } = require("./posts.js");
 
 // Get the highest post_id in the S3 bucket
-async function getMaxPostId() {
+
+/*async function getMaxPostId() {
   const s3 = new S3();
 
   const param = {
@@ -24,6 +27,7 @@ async function setInitialPostId() {
 }
 
 setInitialPostId();
+*/
 
 // Set the initial value of post_id based on the highest post_id in the S3 bucket
 
@@ -32,9 +36,13 @@ setInitialPostId();
 //Upload file to s3
 exports.s3Uploadv2 = async (file) => {
   const s3 = new S3();
-  max_id = await getMaxPostId();
-  post_id = max_id + 1;
+  //max_id = await getMaxPostId();
+  //post_id = max_id + 1;
   //post_id += 1;
+  const posts = await loadPostsCollection();
+  const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
+  post_id = maxPostId.post_id + 1;
+
   let key = `models/${post_id}.glb`;
   if (file.originalname.endsWith(".obj")) {
     key = `models/${post_id}.obj`;

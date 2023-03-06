@@ -86,6 +86,7 @@ export default {
         firstName: '',
         email: '',
         uploading: false
+        
     };
    },
    async created() {

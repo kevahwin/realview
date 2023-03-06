@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
   const userEmail = req.query.userEmail;
   console.log(userEmail);
   const posts = await loadPostsCollection();
-  const filteredPosts = await posts.find({ user_email: userEmail }).toArray();  // posts.find({ userId: userId })
+  const filteredPosts = await posts.find({ user_email: userEmail }).toArray(); // posts.find({ userId: userId })
   res.send(filteredPosts); // Send the filtered posts as the response
   // res.send(await posts.find({}).toArray());
 });
@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
     text: req.body.text,
     createdAt: new Date(),
     post_id: post_id,
-    user_email: req.body.userEmail
+    user_email: req.body.userEmail,
   });
   res.status(201).send();
 });
@@ -74,5 +74,9 @@ async function loadPostsCollection() {
 }
 
 module.exports = router;
+module.exports.post_id = post_id;
+module.exports.loadPostsCollection = loadPostsCollection;
+
+//module.exports = router;
 
 // new comment - test
