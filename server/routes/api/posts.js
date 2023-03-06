@@ -27,8 +27,12 @@ setInitialPostId();
 
 // Get Posts
 router.get("/", async (req, res) => {
+  const userEmail = req.query.userEmail;
+  console.log(userEmail);
   const posts = await loadPostsCollection();
-  res.send(await posts.find({}).toArray());
+  const filteredPosts = await posts.find({ user_email: userEmail }).toArray();  // posts.find({ userId: userId })
+  res.send(filteredPosts); // Send the filtered posts as the response
+  // res.send(await posts.find({}).toArray());
 });
 
 // Add Post
@@ -46,6 +50,7 @@ router.post("/", async (req, res) => {
     text: req.body.text,
     createdAt: new Date(),
     post_id: post_id,
+    user_email: req.body.userEmail
   });
   res.status(201).send();
 });
