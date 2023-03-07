@@ -37,7 +37,7 @@ async function setInitialPostId() {
     }, 0);
   }
 
-  post_id = Math.max(maxPostId, maxS3Id) + 1;
+  post_id = Math.max(maxPostId, maxS3Id);
 }
 
 setInitialPostId();
@@ -56,6 +56,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const posts = await loadPostsCollection();
   await setInitialPostId(); // Compute the new post_id value
+  post_id += 1;
   await posts.insertOne({
     text: req.body.text,
     createdAt: new Date(),
