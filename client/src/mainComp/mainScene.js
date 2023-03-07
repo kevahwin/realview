@@ -174,8 +174,8 @@ export class mainScene {
 
     const spotLight = new SpotLight(
       "spotLight",
-      new Vector3(0, 0.5, -3),
-      new Vector3(0, 1, 3),
+      new Vector3(0, 0.5, -4),
+      new Vector3(0, 0, 4),
       Math.PI / 2,
       10,
       this.scene
@@ -200,10 +200,10 @@ export class mainScene {
     near.position = new Vector3(0, 0, 3);
     near.margin = 0.1;
     near.backPlateMargin = 0.25;
-    near.columns = 2;
+    // near.columns = 1;
     let follower = near.defaultBehavior.followBehavior; //returns the followbehavior created by the
     follower.defaultDistance = 2;
-    // follower.minimumDistance = 1;
+    follower.minimumDistance = 2;
     // follower.maximumDistance = 5;
 
     const button0 = new HolographicButton("spotlightMinus");
@@ -260,7 +260,7 @@ export class mainScene {
     //   this.scene.environmentIntensity *= 0.9;
     // });
 
-    near.isPinned = true;
+    near.isPinned = false;
 
     // // Handle buttons.
     // radialGuiImportResult.meshes.forEach((slice) => {
