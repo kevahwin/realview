@@ -197,11 +197,11 @@ export default {
           near2.isPinned = true;
         }
       )
-      importedMesh.position = new Vector3(5, 5, 5);
+      importedMesh.position = new Vector3(10, 10, 10);
     },
     addToScene2(post) {
       console.log();
-      SceneLoader.ImportMesh(
+      const importedMesh2 = SceneLoader.ImportMesh(
         "",
         "https://realviewtest1.s3.eu-west-2.amazonaws.com/models/",
 
@@ -213,6 +213,7 @@ export default {
           // do something with the imported mesh
         }
       );
+      importedMesh2.position = new Vector3(10, 10, 10);
     },
     addAllToScene() {
       for (let i = 0; i < this.posts.length; i++) {
