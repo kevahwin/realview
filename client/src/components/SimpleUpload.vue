@@ -71,12 +71,18 @@ export default {
       posts: [],
       text: '',
       post_id: '',
+      firstName: '',
+      email: '',
       uploading: false
+
     };
   },
   async created() {
     try {
-      this.posts = await PostService.getPosts();
+      const res = await axios.get('/api/user', { headers: { token: localStorage.getItem('token') } });
+      this.firstName = res.data.user.firstName;
+      this.email = res.data.user.email;
+      this.posts = await PostService.getPosts(this.email);
     } catch (err) {
       this.error = err.message;
     }
@@ -104,13 +110,14 @@ export default {
         this.error = "Invalid file type. Please select a GLB file.";
         return;
       }
-
+      const userEmail = this.email;
       const post = this.text; // set the post's ID to the uploaded file's name
-      await PostService.insertPost(post);
-      this.posts = await PostService.getPosts();
+      await PostService.insertPost(post, userEmail);
+      this.posts = await PostService.getPosts(userEmail);
     },
 
     async deletePost(id, post_id) {
+      const userEmail = this.email;
       // Call a Delete request to delete file from S3
       await axios.delete(`/api/uploads/${post_id}`);
 
@@ -118,7 +125,7 @@ export default {
       await PostService.deletePost(id);
 
       // Display new list of files
-      this.posts = await PostService.getPosts();
+      this.posts = await PostService.getPosts(userEmail);
     },
 
 

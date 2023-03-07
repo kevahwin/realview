@@ -1,25 +1,56 @@
 const express = require("express");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const mongodb = require("mongodb");
 const dotenv = require("dotenv").config();
 
 const router = express.Router();
 
+async function checkForPosts() {
+  const posts = await loadPostsCollection();
+  const postCount = await posts.countDocuments();
+  return postCount > 0;
+}
+
+let post_id;
+
+async function setInitialPostId() {
+  if (await checkForPosts()) {
+    const posts = await loadPostsCollection();
+    const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
+    post_id = maxPostId.post_id;
+  } else {
+    post_id = 1;
+  }
+}
+
+setInitialPostId();
+
 // Get Posts
 router.get("/", async (req, res) => {
+  const userEmail = req.query.userEmail;
+  console.log(userEmail);
   const posts = await loadPostsCollection();
-  res.send(await posts.find({}).toArray());
+  const filteredPosts = await posts.find({ user_email: userEmail }).toArray(); // posts.find({ userId: userId })
+  res.send(filteredPosts); // Send the filtered posts as the response
+  // res.send(await posts.find({}).toArray());
 });
 
-let post_id = 0;
 // Add Post
 router.post("/", async (req, res) => {
+  /* if (!(await checkForPosts())) {
+    let post_id = 0;
+  }*/
   const posts = await loadPostsCollection();
-  post_id += 1;
+  if (await checkForPosts()) {
+    const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
+    post_id = maxPostId.post_id + 1;
+  }
+  //post_id += 1;
   await posts.insertOne({
     text: req.body.text,
     createdAt: new Date(),
     post_id: post_id,
+    user_email: req.body.userEmail,
   });
   res.status(201).send();
 });
@@ -30,21 +61,24 @@ router.delete("/:id", async (req, res) => {
   const posts = await loadPostsCollection();
 
   await posts.deleteOne({ _id: new mongodb.ObjectId(req.params.id) });
-  console.log('Deleted file data from MongoDB...')
+  console.log("Deleted file data from MongoDB...");
   res.status(200).send({});
 });
 
 async function loadPostsCollection() {
-  const client = await mongodb.MongoClient.connect(
-    process.env.MONGODB_URI,
-    {
-      useNewUrlParser: true,
-    }
-  );
- 
+  const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+  });
+
   return client.db("vue_express").collection("posts");
 }
 
 module.exports = router;
+module.exports.post_id = post_id;
+module.exports.loadPostsCollection = loadPostsCollection;
+module.exports.setInitialPostId = setInitialPostId;
+module.exports.checkForPosts = checkForPosts;
+
+//module.exports = router;
 
 // new comment - test

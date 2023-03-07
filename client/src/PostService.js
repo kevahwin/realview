@@ -7,10 +7,10 @@ const url = "api/posts/";
 
 class PostService {
   // get posts
-  static getPosts() {
+  static getPosts(userEmail) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await axios.get(url);
+        const res = await axios.get(`${url}?userEmail=${userEmail}`);
         const data = res.data;
         resolve(
           data.map((post) => ({
@@ -24,9 +24,10 @@ class PostService {
     });
   }
   //Create post
-  static insertPost(text) {
+  static insertPost(text, userEmail) {
     return axios.post(url, {
       text,
+      userEmail
     });
   }
 
