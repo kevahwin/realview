@@ -1,8 +1,9 @@
 import {
+  // AbstractMesh,
   /*ShadowGenerator,*/
   GizmoManager,
   LightGizmo,
-  TransformNode,
+  // TransformNode,
   /*VertexData,*/
   /*VertexBuffer,*/ /*Mesh,*/
   Scene,
@@ -20,12 +21,14 @@ import {
   Texture,*/
   SpotLight,
   DirectionalLight,
+  Color3,
 } from "@babylonjs/core";
 import {
-  // NearMenu,
-  /*TouchHolographicButton,*/
-  /*ColorPicker, TextBlock, StackPanel, AdvancedDynamicTexture, Control,*/ HolographicButton,
-  CylinderPanel,
+  // Button3D,
+  NearMenu,
+  TouchHolographicButton,
+  /*ColorPicker, TextBlock, StackPanel, AdvancedDynamicTexture, Control,*/ /*HolographicButton,*/
+  // CylinderPanel,
   GUI3DManager /*panel, anchor MeshButton3D */,
 } from "@babylonjs/gui";
 
@@ -99,7 +102,9 @@ export class mainScene {
   async initXR() {
     const envHelper = new EnvironmentHelper(
       {
-        groundOpacity: 3,
+        groundColor: new Color3(178, 190, 181),
+        groundSize: 15,
+        groundOpacity: 0.7,
       },
       this.scene
     );
@@ -112,12 +117,19 @@ export class mainScene {
 
     hemiLight.intensity = 0;
 
-    const envTex = CubeTexture.CreateFromPrefilteredData(
+    const studioTex = CubeTexture.CreateFromPrefilteredData(
+      "./environment/studio.env",
+      this.scene
+    );
+    this.scene.environmentTexture = studioTex;
+    this.scene.createDefaultSkybox(studioTex, true);
+
+    const skyTex = CubeTexture.CreateFromPrefilteredData(
       "./environment/sky.env",
       this.scene
     );
-    this.scene.environmentTexture = envTex;
-    this.scene.createDefaultSkybox(envTex, true);
+    this.scene.environmentTexture = skyTex;
+    this.scene.createDefaultSkybox(skyTex, true);
 
     // SceneLoader.ImportMeshAsync("", "./models/", "white-room1.glb").then(
     //   (result2) => {
@@ -139,36 +151,82 @@ export class mainScene {
     // // dispose "__root__" after handling/
     // radialGuiImportResult.meshes[0].dispose();
 
-    // Transform meshes into buttons.
     var manager = new GUI3DManager(this.scene);
-    // manager.useRealisticScaling = true;
 
-    // const near = new NearMenu("near");
-    // manager.addControl(near);
-    // let follower = near.defaultBehavior.followBehavior; //returns the followbehavior created by the
-    // follower.defaultDistance = 3;
-    // follower.minimumDistance = 1;
-    // follower.maximumDistance = 5;
+    // var anchor = new AbstractMesh("anchor", this.scene);
 
-    // const button0 = new HolographicButton("AddLight");
-    // // button0.imageUrl = "./textures/IconFollowMe.png";
-    // button0.text = "Add Light";
-    // near.addButton(button0);
-    // // button0.onPointerUpObservable.add(function () {
-    // //   donut.rotation.x -= 0.05;
-    // // });
+    // // Let's add a button
+    // var button = new Button3D("reset");
+    // manager.addControl(button);
+    // button.linkToTransformNode(anchor);
+    // button.position.z = -1.5;
 
-    // const button1 = new HolographicButton("RemoveLight");
-    // // button1.imageUrl = "./textures/IconClose.png";
-    // button1.text = "Remove Light";
-    // near.addButton(button1);
+    // button.onPointerUpObservable.add(function () {
+    //   this.scene.environmentTexture = studioTex;
+    //   // this.scene.createDefaultSkybox(studioTex, true);
+    // });
 
-    // // const button2 = new HolographicButton("button2");
-    // // // button2.imageUrl = "./textures/IconFollowMe.png";
-    // // button2.text = "Button 2";
-    // // near.addButton(button2);
 
-    // near.isPinned = true;
+    // Transform meshes into buttons.
+
+    manager.useRealisticScaling = true;
+
+    const spotLight = new SpotLight(
+      "spotLight",
+      new Vector3(0, 0.5, -3),
+      new Vector3(0, 1, 3),
+      Math.PI / 2,
+      10,
+      this.scene
+    );
+    spotLight.intensity = 100;
+    spotLight.shadowEnabled = true;
+    // const shadowGen = new ShadowGenerator(2048, spotLight);
+
+    const lightGizmo = new LightGizmo();
+    lightGizmo.scaleRatio = 0.7;
+    lightGizmo.light = spotLight;
+
+    const gizmoManager = new GizmoManager(this.scene);
+    gizmoManager.positionGizmoEnabled = true;
+    gizmoManager.rotationGizmoEnabled = true;
+    gizmoManager.usePointerToAttachGizmos = false;
+    gizmoManager.attachToMesh(lightGizmo.attachedMesh);
+
+    const near = new NearMenu("near");
+    manager.addControl(near);
+    // near.scaling = new Vector3(0.25, 0.25, 0.25);
+    let follower = near.defaultBehavior.followBehavior; //returns the followbehavior created by the
+    follower.defaultDistance = 3;
+    follower.minimumDistance = 1;
+    follower.maximumDistance = 5;
+
+    const button0 = new TouchHolographicButton("spotlightMinus");
+    // button0.imageUrl = "./textures/IconFollowMe.png";
+    button0.text = "Sptlight -";
+    near.addButton(button0);
+    button0.onPointerUpObservable.add(function () {
+      // this.scene.environmentTexture = skyTex;
+      // this.scene.createDefaultSkybox(skyTex, true);
+      spotLight.intensity *= 0.9;
+      console.log(spotLight.intensity);
+    });
+
+    const button1 = new TouchHolographicButton("spotlightPlus");
+    // button1.imageUrl = "./textures/IconClose.png";
+    button1.text = "Spotlight +";
+    near.addButton(button1);
+    button1.onPointerUpObservable.add(function () {
+      spotLight.intensity *= 1.1;
+      console.log(spotLight.intensity);
+    });
+
+    // const button2 = new HolographicButton("button2");
+    // // button2.imageUrl = "./textures/IconFollowMe.png";
+    // button2.text = "Button 2";
+    // near.addButton(button2);
+
+    near.isPinned = true;
 
     // // Handle buttons.
     // radialGuiImportResult.meshes.forEach((slice) => {
@@ -193,51 +251,31 @@ export class mainScene {
     //   manager.addControl(pushButton)
     // })
 
-    var anchor = new TransformNode("");
+    // var anchor = new TransformNode("");
 
-    var panel = new CylinderPanel();
-    panel.margin = 0.2;
+    // var panel = new CylinderPanel();
+    // panel.margin = 0.2;
 
-    manager.addControl(panel);
-    panel.linkToTransformNode(anchor);
-    panel.position.z = -0.5;
-    panel.position.y = 1.75;
+    // manager.addControl(panel);
+    // panel.linkToTransformNode(anchor);
+    // panel.position.z = -0.5;
+    // panel.position.y = 1.75;
 
-    // Let's add some buttons!
-    var addButton = function () {
-      var button = new HolographicButton("orientation");
-      panel.addControl(button);
+    // // Let's add some buttons!
+    // var addButton = function () {
+    //   var button = new HolographicButton("orientation");
+    //   panel.addControl(button);
 
-      button.text = "Button #" + panel.children.length;
-    };
+    //   button.text = "Button #" + panel.children.length;
+    // };
 
-    panel.blockLayout = true;
-    for (var index = 0; index < 30; index++) {
-      addButton();
-    }
-    panel.blockLayout = false;
+    // panel.blockLayout = true;
+    // for (var index = 0; index < 30; index++) {
+    //   addButton();
+    // }
+    // panel.blockLayout = false;
 
-    const spotLight = new SpotLight(
-      "spotLight",
-      new Vector3(0, 0.5, -3),
-      new Vector3(0, 1, 3),
-      Math.PI / 2,
-      10,
-      this.scene
-    );
-    spotLight.intensity = 100;
-    spotLight.shadowEnabled = true;
-    // const shadowGen = new ShadowGenerator(2048, spotLight);
 
-    const lightGizmo = new LightGizmo();
-    lightGizmo.scaleRatio = 4;
-    lightGizmo.light = spotLight;
-
-    const gizmoManager = new GizmoManager(this.scene);
-    gizmoManager.positionGizmoEnabled = true;
-    gizmoManager.rotationGizmoEnabled = true;
-    gizmoManager.usePointerToAttachGizmos = false;
-    gizmoManager.attachToMesh(lightGizmo.attachedMesh);
 
     const directionalLight = new DirectionalLight(
       "directionalLight",
@@ -291,9 +329,11 @@ export class mainScene {
     // panel2.addControl(picker);
 
     envHelper.skybox?.dispose();
+    envHelper.setMainColor = new Color3(0.92, 0.92, 0.92);
     envHelper.ground.position.y = -0.2;
     envHelper.ground.isPickable = false;
     envHelper.ground.visibility = true;
+    envHelper.ground.scaling = new Vector3(1, 1, 1);
     //envHelper.ground.scaling = new Vector3(, 2.1, 2.1);
 
     // const pbr = new PBRMaterial("pbr", this.scene);
@@ -319,10 +359,10 @@ export class mainScene {
 
     //const skybox = (this.scene).createDefaultSkybox(envTex, true);
 
-    this.scene.environmentIntensity = 0.0;
+    this.scene.environmentIntensity = 0.6;
     envHelper.ground.receiveShadows = true;
 
-    const xr = await WebXRDefaultExperience.CreateAsync(this.scene, {
+    await WebXRDefaultExperience.CreateAsync(this.scene, {
       floorMeshes: [envHelper.ground],
       optionalFeatures: true,
     });
@@ -425,73 +465,73 @@ export class mainScene {
     const rayHelper3 = new RayHelper(tmpRay3);
     rayHelper3.show(this.scene);
 
-    let tmpMesh;
+    // let tmpMesh;
 
-    xr.input.onControllerAddedObservable.add((controller) => {
-      controller.onMotionControllerInitObservable.add((motionController) => {
-        if (motionController.handness === "right") {
-          const xr_ids = motionController.getComponentIds();
-          const triggerComponent = motionController.getComponent(xr_ids[0]);
-          triggerComponent.onButtonStateChangedObservable.add(() => {
-            if (triggerComponent.value > 0.5) {
-              controller.getWorldPointerRayToRef(tmpRay, false);
+    // xr.input.onControllerAddedObservable.add((controller) => {
+    //   controller.onMotionControllerInitObservable.add((motionController) => {
+    //     if (motionController.handness === "right") {
+    //       const xr_ids = motionController.getComponentIds();
+    //       const triggerComponent = motionController.getComponent(xr_ids[0]);
+    //       triggerComponent.onButtonStateChangedObservable.add(() => {
+    //         if (triggerComponent.value > 0.5) {
+    //           controller.getWorldPointerRayToRef(tmpRay, false);
 
-              const hit = this.scene.pickWithRay(tmpRay);
+    //           const hit = this.scene.pickWithRay(tmpRay);
 
-              if (hit) {
-                if (hit.pickedMesh !== undefined) {
-                  if (hit.pickedMesh) {
-                    tmpMesh = hit.pickedMesh;
-                    console.log("name:" + hit.pickedMesh.name);
-                    tmpMesh.setParent(motionController.rootMesh);
+    //           if (hit) {
+    //             if (hit.pickedMesh !== undefined) {
+    //               if (hit.pickedMesh) {
+    //                 tmpMesh = hit.pickedMesh;
+    //                 console.log("name:" + hit.pickedMesh.name);
+    //                 tmpMesh.setParent(motionController.rootMesh);
 
-                    // tmpMesh = hit.pickedMesh;
-                    // console.log("name:" + hit.pickedMesh.name);
-                    // parentMesh.setParent(motionController.rootMesh);
-                  }
-                }
-              }
-            } else if (triggerComponent.value < 0.5) {
-              // if (parentMesh.parent !== null) {
-              //   parentMesh.setParent(null);
-              // }
-              if (tmpMesh != undefined) {
-                tmpMesh.setParent(null);
-              }
-            }
-          });
+    //                 // tmpMesh = hit.pickedMesh;
+    //                 // console.log("name:" + hit.pickedMesh.name);
+    //                 // parentMesh.setParent(motionController.rootMesh);
+    //               }
+    //             }
+    //           }
+    //         } else if (triggerComponent.value < 0.5) {
+    //           // if (parentMesh.parent !== null) {
+    //           //   parentMesh.setParent(null);
+    //           // }
+    //           if (tmpMesh != undefined) {
+    //             tmpMesh.setParent(null);
+    //           }
+    //         }
+    //       });
 
-          const abuttonComponent = motionController.getComponent(xr_ids[3]);
-          abuttonComponent.onButtonStateChangedObservable.add(() => {
-            if (abuttonComponent.pressed) {
-              controller.getWorldPointerRayToRef(tmpRay2, false);
+    //       const abuttonComponent = motionController.getComponent(xr_ids[3]);
+    //       abuttonComponent.onButtonStateChangedObservable.add(() => {
+    //         if (abuttonComponent.pressed) {
+    //           controller.getWorldPointerRayToRef(tmpRay2, false);
 
-              const hit = this.scene.pickWithRay(tmpRay2);
+    //           const hit = this.scene.pickWithRay(tmpRay2);
 
-              if (hit && hit.pickedMesh) {
-                hit.pickedMesh.scaling.multiplyInPlace(
-                  new Vector3(0.9, 0.9, 0.9)
-                );
-              }
-            }
-          });
+    //           if (hit && hit.pickedMesh) {
+    //             hit.pickedMesh.scaling.multiplyInPlace(
+    //               new Vector3(0.9, 0.9, 0.9)
+    //             );
+    //           }
+    //         }
+    //       });
 
-          const bbuttonComponent = motionController.getComponent(xr_ids[4]);
-          bbuttonComponent.onButtonStateChangedObservable.add(() => {
-            if (bbuttonComponent.pressed) {
-              controller.getWorldPointerRayToRef(tmpRay3, false);
+    //       const bbuttonComponent = motionController.getComponent(xr_ids[4]);
+    //       bbuttonComponent.onButtonStateChangedObservable.add(() => {
+    //         if (bbuttonComponent.pressed) {
+    //           controller.getWorldPointerRayToRef(tmpRay3, false);
 
-              const hit = this.scene.pickWithRay(tmpRay3);
+    //           const hit = this.scene.pickWithRay(tmpRay3);
 
-              if (hit && hit.pickedMesh) {
-                hit.pickedMesh.scaling.multiplyInPlace(
-                  new Vector3(1.1, 1.1, 1.1)
-                );
-              }
-            }
-          });
-        }
-      });
-    });
+    //           if (hit && hit.pickedMesh) {
+    //             hit.pickedMesh.scaling.multiplyInPlace(
+    //               new Vector3(1.1, 1.1, 1.1)
+    //             );
+    //           }
+    //         }
+    //       });
+    //     }
+    //   });
+    // });
   }
 }
