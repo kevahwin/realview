@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { Vector3 } from '@babylonjs/core';
 import axios from 'axios';
 var SceneLoader = require("@babylonjs/core").SceneLoader;
 var GUI3DManager = require("@babylonjs/gui").GUI3DManager;
@@ -163,6 +164,7 @@ export default {
         this.$parent.scene, // use the scene object from your parent component
         function (newMeshes) {
           var importedMesh = newMeshes[0];
+          importedMesh.position = new Vector3(5, 5, 5)
           console.log(importedMesh);
           // do something with the imported mesh
           var manager2 = new GUI3DManager(this.$parent.scene);
