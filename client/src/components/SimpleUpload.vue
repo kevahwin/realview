@@ -156,7 +156,7 @@ export default {
     },
     addToScene(post) {
       console.log();
-      SceneLoader.ImportMesh(
+      const importedMesh = SceneLoader.ImportMesh(
         "",
         "https://realviewtest1.s3.eu-west-2.amazonaws.com/models/",
 
@@ -164,7 +164,7 @@ export default {
         this.$parent.scene, // use the scene object from your parent component
         function (newMeshes) {
           var importedMesh = newMeshes[0];
-          importedMesh.position = new Vector3(5, 5, 5)
+          importedMesh.position = new Vector3(5, 5, 5);
           console.log(importedMesh);
           // do something with the imported mesh
           var manager2 = new GUI3DManager(this.$parent.scene);
@@ -197,6 +197,7 @@ export default {
           near2.isPinned = true;
         }
       )
+      importedMesh.position = new Vector3(5, 5, 5);
     },
     addToScene2(post) {
       console.log();
