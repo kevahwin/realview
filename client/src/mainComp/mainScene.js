@@ -1,4 +1,5 @@
 import {
+  HighlightLayer,
   // AbstractMesh,
   /*ShadowGenerator,*/
   GizmoManager,
@@ -56,7 +57,7 @@ export class mainScene {
 
   constructor(canvas) {
     this.canvas = canvas;
-    this.engine = new Engine(this.canvas, true);
+    this.engine = new Engine(this.canvas, true, { stencil: true });
     this.scene = this.CreateScene();
 
     //const manager = new GUI.GUI3DManager(this.scene);
@@ -502,6 +503,7 @@ export class mainScene {
     rayHelper3.show(this.scene);
 
     let tmpMesh;
+    const hl = new HighlightLayer("hl1", this.scene);
 
     xr.input.onControllerAddedObservable.add((controller) => {
       controller.onMotionControllerInitObservable.add((motionController) => {
@@ -519,7 +521,10 @@ export class mainScene {
                   if (hit.pickedMesh) {
                     tmpMesh = hit.pickedMesh;
                     console.log("name:" + hit.pickedMesh.name);
+                    hl.addMesh(tmpMesh, Color3.Green());
                     tmpMesh.setParent(motionController.rootMesh);
+
+
 
                     // tmpMesh = hit.pickedMesh;
                     // console.log("name:" + hit.pickedMesh.name);
@@ -532,7 +537,9 @@ export class mainScene {
               //   parentMesh.setParent(null);
               // }
               if (tmpMesh != undefined) {
+                hl.removeMesh(tmpMesh);
                 tmpMesh.setParent(null);
+
               }
             }
           });
