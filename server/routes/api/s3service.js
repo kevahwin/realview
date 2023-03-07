@@ -26,23 +26,29 @@ const { checkForPosts } = require("./posts.js");
 */
 
 async function setInitialPostId() {
+  const posts = await loadPostsCollection();
+  const s3 = new S3();
+
+  let maxPostId = 1;
   if (await checkForPosts()) {
-    const posts = await loadPostsCollection();
-    const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
-    const s3 = new S3();
-    const param = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Prefix: "models/",
-    };
-    const objects = await s3.listObjectsV2(param).promise();
-    const maxS3Id = objects.Contents.reduce((max, obj) => {
+    const post = await posts.findOne({}, { sort: { post_id: -1 } });
+    maxPostId = post.post_id;
+  }
+
+  let maxS3Id = 1;
+  const s3Param = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Prefix: "models/",
+  };
+  const objects = await s3.listObjectsV2(s3Param).promise();
+  if (objects.Contents.length > 0) {
+    maxS3Id = objects.Contents.reduce((max, obj) => {
       const s3_id = parseInt(obj.Key.match(/models\/(\d+)\.(obj|glb)$/)[1], 10);
       return s3_id > max ? s3_id : max;
     }, 0);
-    post_id = Math.max(maxPostId.post_id, maxS3Id);
-  } else {
-    post_id = 1;
   }
+
+  post_id = Math.max(maxPostId, maxS3Id);
 }
 
 setInitialPostId();
