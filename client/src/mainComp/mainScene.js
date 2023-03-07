@@ -22,8 +22,8 @@ import {
   DirectionalLight,
 } from "@babylonjs/core";
 import {
-  NearMenu,
-  TouchHolographicButton,
+  // NearMenu,
+  /*TouchHolographicButton,*/
   /*ColorPicker, TextBlock, StackPanel, AdvancedDynamicTexture, Control,*/ HolographicButton,
   CylinderPanel,
   GUI3DManager /*panel, anchor MeshButton3D */,
@@ -143,29 +143,32 @@ export class mainScene {
     var manager = new GUI3DManager(this.scene);
     // manager.useRealisticScaling = true;
 
-    const near = new NearMenu("near");
-    manager.addControl(near);
-    let follower = near.defaultBehavior.followBehavior; //returns the followbehavior created by the
-    follower.defaultDistance = 3;
-    follower.minimumDistance = 1;
-    follower.maximumDistance = 5;
+    // const near = new NearMenu("near");
+    // manager.addControl(near);
+    // let follower = near.defaultBehavior.followBehavior; //returns the followbehavior created by the
+    // follower.defaultDistance = 3;
+    // follower.minimumDistance = 1;
+    // follower.maximumDistance = 5;
 
-    const button0 = new TouchHolographicButton("button0");
-    // button0.imageUrl = "./textures/IconFollowMe.png";
-    button0.text = "Button 0";
-    near.addButton(button0);
+    // const button0 = new HolographicButton("AddLight");
+    // // button0.imageUrl = "./textures/IconFollowMe.png";
+    // button0.text = "Add Light";
+    // near.addButton(button0);
+    // // button0.onPointerUpObservable.add(function () {
+    // //   donut.rotation.x -= 0.05;
+    // // });
 
-    const button1 = new TouchHolographicButton("button1");
-    // button1.imageUrl = "./textures/IconClose.png";
-    button1.text = "Button 1";
-    near.addButton(button1);
+    // const button1 = new HolographicButton("RemoveLight");
+    // // button1.imageUrl = "./textures/IconClose.png";
+    // button1.text = "Remove Light";
+    // near.addButton(button1);
 
-    const button2 = new TouchHolographicButton("button2");
-    // button2.imageUrl = "./textures/IconFollowMe.png";
-    button2.text = "Button 2";
-    near.addButton(button2);
+    // // const button2 = new HolographicButton("button2");
+    // // // button2.imageUrl = "./textures/IconFollowMe.png";
+    // // button2.text = "Button 2";
+    // // near.addButton(button2);
 
-    near.isPinned = true;
+    // near.isPinned = true;
 
     // // Handle buttons.
     // radialGuiImportResult.meshes.forEach((slice) => {
@@ -316,7 +319,8 @@ export class mainScene {
 
     //const skybox = (this.scene).createDefaultSkybox(envTex, true);
 
-    this.scene.environmentIntensity = 0.1;
+    this.scene.environmentIntensity = 0.0;
+    envHelper.ground.receiveShadows = true;
 
     const xr = await WebXRDefaultExperience.CreateAsync(this.scene, {
       floorMeshes: [envHelper.ground],
@@ -382,7 +386,7 @@ export class mainScene {
     //     shadowGen2.getShadowMap().renderList.push(mergedMesh);
     //     shadowGen2.addShadowCaster(mergedMesh);
 
-    //     envHelper.ground.receiveShadows = true;
+
 
     //     //shadowGen.addShadowCaster(mergedMesh);
 
