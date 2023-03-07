@@ -17,8 +17,8 @@ import {
   Ray,
   RayHelper,
   /*SceneLoader,*/
-  /*PBRMaterial,
-  Texture,*/
+  PBRMaterial,
+  Texture,
   SpotLight,
   DirectionalLight,
   Color3,
@@ -26,7 +26,8 @@ import {
 import {
   // Button3D,
   NearMenu,
-  TouchHolographicButton,
+  HolographicButton,
+  // TouchHolographicButton,
   /*ColorPicker, TextBlock, StackPanel, AdvancedDynamicTexture, Control,*/ /*HolographicButton,*/
   // CylinderPanel,
   GUI3DManager /*panel, anchor MeshButton3D */,
@@ -79,9 +80,7 @@ export class mainScene {
 
     const camera = new ArcRotateCamera(
       "Camera",
-      -(Math.PI / 4) * 3,
-      Math.PI / 4,
-      10,
+      0, 0, 5,
       new Vector3(0, 0, 0),
       this.scene
     );
@@ -131,6 +130,8 @@ export class mainScene {
     this.scene.environmentTexture = skyTex;
     this.scene.createDefaultSkybox(skyTex, true);
 
+    this.scene.environmentIntensity = 0.6;
+
     // SceneLoader.ImportMeshAsync("", "./models/", "white-room1.glb").then(
     //   (result2) => {
     //     result2.meshes.forEach((mesh) => {
@@ -169,7 +170,7 @@ export class mainScene {
 
     // Transform meshes into buttons.
 
-    manager.useRealisticScaling = true;
+    manager.useRealisticScaling = false;
 
     const spotLight = new SpotLight(
       "spotLight",
@@ -195,13 +196,17 @@ export class mainScene {
 
     const near = new NearMenu("near");
     manager.addControl(near);
-    // near.scaling = new Vector3(0.25, 0.25, 0.25);
+    near.scaling = new Vector3(0.25, 0.25, 0.25);
+    near.position = new Vector3(0, 0, 3);
+    near.margin = 0.1;
+    near.backPlateMargin = 0.25;
+    near.columns = 2;
     let follower = near.defaultBehavior.followBehavior; //returns the followbehavior created by the
-    follower.defaultDistance = 3;
-    follower.minimumDistance = 1;
-    follower.maximumDistance = 5;
+    follower.defaultDistance = 2;
+    // follower.minimumDistance = 1;
+    // follower.maximumDistance = 5;
 
-    const button0 = new TouchHolographicButton("spotlightMinus");
+    const button0 = new HolographicButton("spotlightMinus");
     // button0.imageUrl = "./textures/IconFollowMe.png";
     button0.text = "Sptlight -";
     near.addButton(button0);
@@ -212,7 +217,7 @@ export class mainScene {
       console.log(spotLight.intensity);
     });
 
-    const button1 = new TouchHolographicButton("spotlightPlus");
+    const button1 = new HolographicButton("spotlightPlus");
     // button1.imageUrl = "./textures/IconClose.png";
     button1.text = "Spotlight +";
     near.addButton(button1);
@@ -221,10 +226,39 @@ export class mainScene {
       console.log(spotLight.intensity);
     });
 
-    // const button2 = new HolographicButton("button2");
+    const button2 = new HolographicButton("spotlightAnglePlus");
+    // button2.imageUrl = "./textures/IconFollowMe.png";
+    button2.text = "Spotlight Angle +";
+    near.addButton(button2);
+    button2.onPointerUpObservable.add(function () {
+      spotLight.angle *= 1.1;
+      console.log(spotLight.angle);
+    });
+
+    const button3 = new HolographicButton("spotlightAngleMinus");
+    // button2.imageUrl = "./textures/IconFollowMe.png";
+    button3.text = "Spotlight Angle -";
+    near.addButton(button3);
+    button3.onPointerUpObservable.add(function () {
+      spotLight.angle *= 0.9;
+      console.log(spotLight.angle);
+    });
+
+    // const button4 = new TouchHolographicButton("environmentIntensityPlus");
     // // button2.imageUrl = "./textures/IconFollowMe.png";
-    // button2.text = "Button 2";
-    // near.addButton(button2);
+    // button4.text = "Environment Intensity Plus";
+    // near.addButton(button4);
+    // button4.onPointerUpObservable.add(function () {
+    //   this.scene.environmentIntensity *= 1.1;
+    // });
+
+    // const button5 = new TouchHolographicButton("environmentIntensityMinus");
+    // // button2.imageUrl = "./textures/IconFollowMe.png";
+    // button5.text = "Environment Intensity Minus";
+    // near.addButton(button5);
+    // button5.onPointerUpObservable.add(function () {
+    //   this.scene.environmentIntensity *= 0.9;
+    // });
 
     near.isPinned = true;
 
@@ -336,33 +370,33 @@ export class mainScene {
     envHelper.ground.scaling = new Vector3(1, 1, 1);
     //envHelper.ground.scaling = new Vector3(, 2.1, 2.1);
 
-    // const pbr = new PBRMaterial("pbr", this.scene);
-    // pbr.albedoTexture = new Texture(
-    //   "./textures/mud/brown_mud_diffuse.jpeg",
-    //   this.scene
-    // );
-    // pbr.bumpTexture = new Texture(
-    //   "./textures/mud/brown_mud_normal.jpeg",
-    //   this.scene
-    // );
-    // pbr.invertNormalMapX = true;
-    // pbr.invertNormalMapY = true;
+    const pbr = new PBRMaterial("pbr", this.scene);
+    pbr.albedoTexture = new Texture(
+      "./textures/concrete/concrete_diffuse.jpeg",
+      this.scene
+    );
+    pbr.bumpTexture = new Texture(
+      "./textures/concrete/concrete_normal.jpeg",
+      this.scene
+    );
+    pbr.invertNormalMapX = true;
+    pbr.invertNormalMapY = true;
 
-    // pbr.useAmbientOcclusionFromMetallicTextureRed = true;
+    pbr.useAmbientOcclusionFromMetallicTextureRed = true;
 
-    // pbr.useRoughnessFromMetallicTextureGreen = true;
+    pbr.useRoughnessFromMetallicTextureGreen = true;
 
-    // pbr.useMetallnessFromMetallicTextureBlue = true;
+    pbr.useMetallnessFromMetallicTextureBlue = true;
 
-    // pbr.roughness = 0.9;
-    // envHelper.ground.material = pbr;
+    pbr.roughness = 0.9;
+    envHelper.ground.material = pbr;
 
     //const skybox = (this.scene).createDefaultSkybox(envTex, true);
 
-    this.scene.environmentIntensity = 0.6;
+
     envHelper.ground.receiveShadows = true;
 
-    await WebXRDefaultExperience.CreateAsync(this.scene, {
+    const xr = await WebXRDefaultExperience.CreateAsync(this.scene, {
       floorMeshes: [envHelper.ground],
       optionalFeatures: true,
     });
@@ -465,73 +499,73 @@ export class mainScene {
     const rayHelper3 = new RayHelper(tmpRay3);
     rayHelper3.show(this.scene);
 
-    // let tmpMesh;
+    let tmpMesh;
 
-    // xr.input.onControllerAddedObservable.add((controller) => {
-    //   controller.onMotionControllerInitObservable.add((motionController) => {
-    //     if (motionController.handness === "right") {
-    //       const xr_ids = motionController.getComponentIds();
-    //       const triggerComponent = motionController.getComponent(xr_ids[0]);
-    //       triggerComponent.onButtonStateChangedObservable.add(() => {
-    //         if (triggerComponent.value > 0.5) {
-    //           controller.getWorldPointerRayToRef(tmpRay, false);
+    xr.input.onControllerAddedObservable.add((controller) => {
+      controller.onMotionControllerInitObservable.add((motionController) => {
+        if (motionController.handness === "right") {
+          const xr_ids = motionController.getComponentIds();
+          const triggerComponent = motionController.getComponent(xr_ids[0]);
+          triggerComponent.onButtonStateChangedObservable.add(() => {
+            if (triggerComponent.value > 0.5) {
+              controller.getWorldPointerRayToRef(tmpRay, false);
 
-    //           const hit = this.scene.pickWithRay(tmpRay);
+              const hit = this.scene.pickWithRay(tmpRay);
 
-    //           if (hit) {
-    //             if (hit.pickedMesh !== undefined) {
-    //               if (hit.pickedMesh) {
-    //                 tmpMesh = hit.pickedMesh;
-    //                 console.log("name:" + hit.pickedMesh.name);
-    //                 tmpMesh.setParent(motionController.rootMesh);
+              if (hit) {
+                if (hit.pickedMesh !== undefined) {
+                  if (hit.pickedMesh) {
+                    tmpMesh = hit.pickedMesh;
+                    console.log("name:" + hit.pickedMesh.name);
+                    tmpMesh.setParent(motionController.rootMesh);
 
-    //                 // tmpMesh = hit.pickedMesh;
-    //                 // console.log("name:" + hit.pickedMesh.name);
-    //                 // parentMesh.setParent(motionController.rootMesh);
-    //               }
-    //             }
-    //           }
-    //         } else if (triggerComponent.value < 0.5) {
-    //           // if (parentMesh.parent !== null) {
-    //           //   parentMesh.setParent(null);
-    //           // }
-    //           if (tmpMesh != undefined) {
-    //             tmpMesh.setParent(null);
-    //           }
-    //         }
-    //       });
+                    // tmpMesh = hit.pickedMesh;
+                    // console.log("name:" + hit.pickedMesh.name);
+                    // parentMesh.setParent(motionController.rootMesh);
+                  }
+                }
+              }
+            } else if (triggerComponent.value < 0.5) {
+              // if (parentMesh.parent !== null) {
+              //   parentMesh.setParent(null);
+              // }
+              if (tmpMesh != undefined) {
+                tmpMesh.setParent(null);
+              }
+            }
+          });
 
-    //       const abuttonComponent = motionController.getComponent(xr_ids[3]);
-    //       abuttonComponent.onButtonStateChangedObservable.add(() => {
-    //         if (abuttonComponent.pressed) {
-    //           controller.getWorldPointerRayToRef(tmpRay2, false);
+          const abuttonComponent = motionController.getComponent(xr_ids[3]);
+          abuttonComponent.onButtonStateChangedObservable.add(() => {
+            if (abuttonComponent.pressed) {
+              controller.getWorldPointerRayToRef(tmpRay2, false);
 
-    //           const hit = this.scene.pickWithRay(tmpRay2);
+              const hit = this.scene.pickWithRay(tmpRay2);
 
-    //           if (hit && hit.pickedMesh) {
-    //             hit.pickedMesh.scaling.multiplyInPlace(
-    //               new Vector3(0.9, 0.9, 0.9)
-    //             );
-    //           }
-    //         }
-    //       });
+              if (hit && hit.pickedMesh) {
+                hit.pickedMesh.scaling.multiplyInPlace(
+                  new Vector3(0.9, 0.9, 0.9)
+                );
+              }
+            }
+          });
 
-    //       const bbuttonComponent = motionController.getComponent(xr_ids[4]);
-    //       bbuttonComponent.onButtonStateChangedObservable.add(() => {
-    //         if (bbuttonComponent.pressed) {
-    //           controller.getWorldPointerRayToRef(tmpRay3, false);
+          const bbuttonComponent = motionController.getComponent(xr_ids[4]);
+          bbuttonComponent.onButtonStateChangedObservable.add(() => {
+            if (bbuttonComponent.pressed) {
+              controller.getWorldPointerRayToRef(tmpRay3, false);
 
-    //           const hit = this.scene.pickWithRay(tmpRay3);
+              const hit = this.scene.pickWithRay(tmpRay3);
 
-    //           if (hit && hit.pickedMesh) {
-    //             hit.pickedMesh.scaling.multiplyInPlace(
-    //               new Vector3(1.1, 1.1, 1.1)
-    //             );
-    //           }
-    //         }
-    //       });
-    //     }
-    //   });
-    // });
+              if (hit && hit.pickedMesh) {
+                hit.pickedMesh.scaling.multiplyInPlace(
+                  new Vector3(1.1, 1.1, 1.1)
+                );
+              }
+            }
+          });
+        }
+      });
+    });
   }
 }
