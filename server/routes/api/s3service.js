@@ -29,7 +29,17 @@ async function setInitialPostId() {
   if (await checkForPosts()) {
     const posts = await loadPostsCollection();
     const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
-    post_id = maxPostId.post_id;
+    const s3 = new S3();
+    const param = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Prefix: "models/",
+    };
+    const objects = await s3.listObjectsV2(param).promise();
+    const maxS3Id = objects.Contents.reduce((max, obj) => {
+      const s3_id = parseInt(obj.Key.match(/models\/(\d+)\.(obj|glb)$/)[1], 10);
+      return s3_id > max ? s3_id : max;
+    }, 0);
+    post_id = Math.max(maxPostId.post_id, maxS3Id);
   } else {
     post_id = 1;
   }
@@ -44,23 +54,28 @@ setInitialPostId();
 //Upload file to s3
 exports.s3Uploadv2 = async (file) => {
   const s3 = new S3();
-  //max_id = await getMaxPostId();
-  //post_id = max_id + 1;
-  //post_id += 1;
   const posts = await loadPostsCollection();
   const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
-  post_id = maxPostId.post_id + 1;
-
+  const param = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Prefix: "models/",
+  };
+  const objects = await s3.listObjectsV2(param).promise();
+  const maxS3Id = objects.Contents.reduce((max, obj) => {
+    const s3_id = parseInt(obj.Key.match(/models\/(\d+)\.(obj|glb)$/)[1], 10);
+    return s3_id > max ? s3_id : max;
+  }, 0);
+  post_id = Math.max(maxPostId.post_id, maxS3Id) + 1;
   let key = `models/${post_id}.glb`;
   if (file.originalname.endsWith(".obj")) {
     key = `models/${post_id}.obj`;
   }
-  const param = {
+  const uploadParam = {
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: key,
     Body: file.buffer,
   };
-  return await s3.upload(param).promise();
+  return await s3.upload(uploadParam).promise();
 };
 
 //Get List of Contents in S3 Bucket

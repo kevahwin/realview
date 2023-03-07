@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const mongodb = require("mongodb");
 const dotenv = require("dotenv").config();
+const { S3 } = require("aws-sdk");
 
 const router = express.Router();
 
@@ -14,13 +15,29 @@ async function checkForPosts() {
 let post_id;
 
 async function setInitialPostId() {
+  const posts = await loadPostsCollection();
+  const s3 = new S3();
+
+  let maxPostId = 1;
   if (await checkForPosts()) {
-    const posts = await loadPostsCollection();
-    const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
-    post_id = maxPostId.post_id;
-  } else {
-    post_id = 1;
+    const post = await posts.findOne({}, { sort: { post_id: -1 } });
+    maxPostId = post.post_id;
   }
+
+  let maxS3Id = 1;
+  const s3Param = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Prefix: "models/",
+  };
+  const objects = await s3.listObjectsV2(s3Param).promise();
+  if (objects.Contents.length > 0) {
+    maxS3Id = objects.Contents.reduce((max, obj) => {
+      const s3_id = parseInt(obj.Key.match(/models\/(\d+)\.(obj|glb)$/)[1], 10);
+      return s3_id > max ? s3_id : max;
+    }, 0);
+  }
+
+  post_id = Math.max(maxPostId, maxS3Id) + 1;
 }
 
 setInitialPostId();
@@ -37,15 +54,8 @@ router.get("/", async (req, res) => {
 
 // Add Post
 router.post("/", async (req, res) => {
-  /* if (!(await checkForPosts())) {
-    let post_id = 0;
-  }*/
   const posts = await loadPostsCollection();
-  if (await checkForPosts()) {
-    const maxPostId = await posts.findOne({}, { sort: { post_id: -1 } });
-    post_id = maxPostId.post_id + 1;
-  }
-  //post_id += 1;
+  await setInitialPostId(); // Compute the new post_id value
   await posts.insertOne({
     text: req.body.text,
     createdAt: new Date(),
