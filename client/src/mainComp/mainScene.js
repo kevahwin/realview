@@ -196,19 +196,28 @@ export class mainScene {
 
     const near = new NearMenu("near");
     manager.addControl(near);
-    near.scaling = new Vector3(0.25, 0.25, 0.25);
-    near.position = new Vector3(0, 0, 3);
+    near.scaling = new Vector3(0.20, 0.20, 0.20);
+    // near.position = new Vector3(0, 0, 3);
     near.margin = 0.1;
     near.backPlateMargin = 0.25;
     // near.columns = 1;
     let follower = near.defaultBehavior.followBehavior; //returns the followbehavior created by the
-    follower.defaultDistance = 2;
-    follower.minimumDistance = 2;
-    // follower.maximumDistance = 5;
+    follower.defaultDistance = 1.5;
+    follower.minimumDistance = 1;
+    follower.maximumDistance = 2;
+
+    const button1 = new HolographicButton("spotlightPlus");
+    // button1.imageUrl = "./textures/IconClose.png";
+    button1.text = "Spotlight Intensity +";
+    near.addButton(button1);
+    button1.onPointerUpObservable.add(function () {
+      spotLight.intensity *= 1.1;
+      console.log(spotLight.intensity);
+    });
 
     const button0 = new HolographicButton("spotlightMinus");
     // button0.imageUrl = "./textures/IconFollowMe.png";
-    button0.text = "Sptlight -";
+    button0.text = "Spotlight Intensity -";
     near.addButton(button0);
     button0.onPointerUpObservable.add(function () {
       // this.scene.environmentTexture = skyTex;
@@ -217,14 +226,7 @@ export class mainScene {
       console.log(spotLight.intensity);
     });
 
-    const button1 = new HolographicButton("spotlightPlus");
-    // button1.imageUrl = "./textures/IconClose.png";
-    button1.text = "Spotlight +";
-    near.addButton(button1);
-    button1.onPointerUpObservable.add(function () {
-      spotLight.intensity *= 1.1;
-      console.log(spotLight.intensity);
-    });
+
 
     const button2 = new HolographicButton("spotlightAnglePlus");
     // button2.imageUrl = "./textures/IconFollowMe.png";
