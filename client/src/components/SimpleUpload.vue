@@ -155,7 +155,7 @@ export default {
     },
     addToScene(post) {
       console.log();
-      SceneLoader.ImportMeshAsync(
+      SceneLoader.ImportMesh(
         "",
         "https://realviewtest1.s3.eu-west-2.amazonaws.com/models/",
 
@@ -165,10 +165,6 @@ export default {
           var importedMesh = newMeshes[0];
           console.log(importedMesh);
           // do something with the imported mesh
-        }
-      ).then(
-        (result) => {
-          console.log("result.meshes", result.meshes);
           var manager2 = new GUI3DManager(this.$parent.scene);
 
           const near2 = new NearMenu("near");
@@ -197,7 +193,6 @@ export default {
           // near2.addButton(button2);
 
           near2.isPinned = true;
-
         }
       )
     },
