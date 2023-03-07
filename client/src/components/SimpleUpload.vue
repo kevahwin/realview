@@ -155,7 +155,7 @@ export default {
     },
     addToScene(post) {
       console.log();
-      SceneLoader.ImportMesh(
+      SceneLoader.ImportMeshAsync(
         "",
         "https://realviewtest1.s3.eu-west-2.amazonaws.com/models/",
 
