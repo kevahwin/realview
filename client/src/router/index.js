@@ -33,7 +33,11 @@ const routes = [
         name: 'HomeView',
         component: HomeView
     },
-    
+    {
+        path: '/FAQView',
+        name: 'FAQView',
+        component: FAQView
+    },
     {
         path: '/LoginView',
         name: 'LoginView',
