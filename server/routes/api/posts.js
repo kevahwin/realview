@@ -91,5 +91,3 @@ module.exports.setInitialPostId = setInitialPostId;
 module.exports.checkForPosts = checkForPosts;
 
 //module.exports = router;
-
-// new comment - test

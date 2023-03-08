@@ -1,18 +1,9 @@
 <template>
   <div>
-    <!-- <div class="logout-button">
-      <button class="logout-button" @click="logout">Logout</button>
-    </div> -->
     <NavbarComponent />
-    <!-- <h1>Hello, {{ firstName }}!</h1> -->
     <MainComp />
-
-    <!-- <SimpleUpload />   -->
     <ToolBar />
-
-    
   </div>
-
 </template>
 
 <script>
@@ -20,7 +11,6 @@
 import axios from 'axios'
 import MainComp from '../components/MainComp.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
-// import SimpleUpload from '../components/SimpleUpload.vue'
 import router from '../router/index.js'
 import ToolBar from '../components/ToolBar.vue'
 
@@ -29,7 +19,6 @@ export default {
   components: {
     MainComp,
     NavbarComponent,
-    // SimpleUpload
     ToolBar,
   },
   data() {

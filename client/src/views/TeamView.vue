@@ -23,37 +23,37 @@
             id: 1,
             name: "Kirill Sakharov",
             description:
-              "Kirill holds a BSc in Management from LSE and is currently pursuing an MSc in Computing at Imperial College.",
+              "Kirill holds a BSc in Management from London School of Economics and is passionate about powerlifting and mathematics. Loves a good challenge and a good Chicago Pizza.",
           },
           {
             id: 2,
             name: "Olivia Chavigny de Lachevrotiere",
             description:
-              "Olivia holds a BA in International Business Management from University of Sheffield and is currently pursuing an MSc in Computing at Imperial College.",
+              "Olivia holds a BA in International Business Management from University of Sheffield. She rocked the marketing world for 2 years, managing analytics and global campaigns from Warsaw and Amsterdam. She is currently pursuing an MSc in Computing at Imperial College.",
           },
           {
             id: 3,
             name: "Nikhil Rikhye",
             description:
-              "Nikhil holds a BSc in Politics and Philosophy from LSE and is currently pursuing an MSc in Computing at Imperial College.",
+              "Nikhil holds a BSc in Politics and Philosophy from London School of Economics. His excitement about the Virtual Reality infects everyone around him. The people person of the team.",
           },
           {
             id: 4,
             name: "Burak Gunduz",
             description:
-              "Burak holds a BEng in Aerospace Engineering from Queen's University Belfast and is currently pursuing an MSc in Computing at Imperial College.",
+              "Burak holds a BEng in Aerospace Engineering from Queen's University Belfast. Burak's interests lie at the fascinating crossroads of engineering and arts.",
           },
           {
             id: 5,
             name: "Michal Karlubik",
             description:
-              "Michal holds a BA in PPE from University of Oxford and is currently pursuing an MSc in Computing at Imperial College.",
+              "Michal holds a BA in PPE from University of Oxford and is the string linking the team with the business world. Currently pursuing a MSc in Computing, interested in the unending opportunities in the area of tech.",
           },
           {
             id: 6,
             name: "Kevin Ahwin",
             description:
-              "Kevin holds a BEng in Mechanical Engineering from Afe Babalola University and is currently pursuing an MSc in Computing at Imperial College.",
+              "Kevin holds a BEng in Mechanical Engineering from Afe Babalola University. He is a great engineer and a true leader at heart. Brings in a good spirit and experience in tech.",
           },
         ],
       };

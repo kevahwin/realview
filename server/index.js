@@ -22,10 +22,8 @@ const app = express();
 ***************/
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(cors());
 app.use(morgan('tiny'));
-// app.use(helmet())
 
 mongoose
         .connect(process.env.MONGODB_URI, {
