@@ -16,7 +16,7 @@ import {
   ArcRotateCamera,
   /*StandardMaterial,*/ CubeTexture,
   Ray,
-  RayHelper,
+  //RayHelper,
   /*SceneLoader,*/
   PBRMaterial,
   Texture,
@@ -131,7 +131,7 @@ export class mainScene {
     this.scene.environmentTexture = skyTex;
     this.scene.createDefaultSkybox(skyTex, true);
 
-    this.scene.environmentIntensity = 0.6;
+    this.scene.environmentIntensity = 0.05;
 
     // SceneLoader.ImportMeshAsync("", "./models/", "white-room1.glb").then(
     //   (result2) => {
@@ -186,7 +186,7 @@ export class mainScene {
     // const shadowGen = new ShadowGenerator(2048, spotLight);
 
     const lightGizmo = new LightGizmo();
-    lightGizmo.scaleRatio = 0.7;
+    lightGizmo.scaleRatio = 3;
     lightGizmo.light = spotLight;
 
     const gizmoManager = new GizmoManager(this.scene);
@@ -194,6 +194,7 @@ export class mainScene {
     gizmoManager.rotationGizmoEnabled = true;
     gizmoManager.usePointerToAttachGizmos = false;
     gizmoManager.attachToMesh(lightGizmo.attachedMesh);
+    // gizmoManager.boundingBoxGizmoEnabled = true;
 
     const near = new NearMenu("near");
     manager.addControl(near);
@@ -495,12 +496,12 @@ export class mainScene {
     const tmpRay2 = new Ray(new Vector3(), new Vector3(), 3);
     const tmpRay3 = new Ray(new Vector3(), new Vector3(), 3);
 
-    const rayHelper = new RayHelper(tmpRay);
-    rayHelper.show(this.scene);
-    const rayHelper2 = new RayHelper(tmpRay2);
-    rayHelper2.show(this.scene);
-    const rayHelper3 = new RayHelper(tmpRay3);
-    rayHelper3.show(this.scene);
+    // const rayHelper = new RayHelper(tmpRay);
+    // rayHelper.show(this.scene);
+    // const rayHelper2 = new RayHelper(tmpRay2);
+    // rayHelper2.show(this.scene);
+    // const rayHelper3 = new RayHelper(tmpRay3);
+    // rayHelper3.show(this.scene);
 
     let tmpMesh;
     const hl = new HighlightLayer("hl1", this.scene);
