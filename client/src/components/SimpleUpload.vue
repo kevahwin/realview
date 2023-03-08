@@ -57,6 +57,7 @@ var SceneLoader = require("@babylonjs/core").SceneLoader;
 var GUI3DManager = require("@babylonjs/gui").GUI3DManager;
 var NearMenu = require("@babylonjs/gui").NearMenu;
 var HolographicButton = require("@babylonjs/gui").HolographicButton;
+const { v4: uuidv4 } = require('uuid');
 
 import PostService from '../PostService'
 
@@ -134,7 +135,7 @@ export default {
 
     // PUSHING THE UPLOADED FILE TO BACKEND
     async sendFile() {
-      const randomId = "prefix_" + Math.random().toString(36).substring(2, 15);
+      const randomId = uuidv4();
       this.createPost(randomId);
       const userEmail = this.email;
       //const postText = this.text;
