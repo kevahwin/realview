@@ -15,6 +15,9 @@
         <li class="nav-item">
           <router-link to="/TeamView" class="nav-link" active-class="active">Team</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/FAQView" class="nav-link" active-class="active">FAQ</router-link>
+        </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
