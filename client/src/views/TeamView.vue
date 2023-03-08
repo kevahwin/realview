@@ -29,7 +29,7 @@
             id: 2,
             name: "Olivia Chavigny de Lachevrotiere",
             description:
-              "Olivia holds a BA in International Business Management from University of Sheffield. She rocked the marketing world for 2 years, managing analytics and global campaigns from Warsaw and Amsterdam. She is currently pursuing an MSc in Computing at Imperial College.",
+              "Olivia holds a BA in International Business Management from University of Sheffield. She rocked the marketing world for 2 years, managing analytics and global campaigns from Warsaw and Amsterdam.",
           },
           {
             id: 3,
