@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarComponent />
+    <NavbarHome />
     <MainComp />
     <ToolBar />
   </div>
@@ -10,7 +10,7 @@
 
 import axios from 'axios'
 import MainComp from '../components/MainComp.vue'
-import NavbarComponent from '../components/NavbarComponent.vue'
+import NavbarHome from '../components/NavbarHome.vue'
 import router from '../router/index.js'
 import ToolBar from '../components/ToolBar.vue'
 
@@ -18,7 +18,7 @@ export default {
   name: 'App',
   components: {
     MainComp,
-    NavbarComponent,
+    NavbarHome,
     ToolBar,
   },
   data() {
