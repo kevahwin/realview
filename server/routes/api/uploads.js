@@ -17,7 +17,7 @@ const {
 } = require("./s3service");
 const User = require("../../models/userModel");
 const ERROR_FILE_TYPE = "Only glb files are allowed.";
-const MAX_SIZE = 1024 * 1024 * 10; // MAX SIZE OF 100MB
+const MAX_SIZE = 1024 * 1024 * 100; // MAX SIZE OF 100MB
 
 const router = express.Router();
 
