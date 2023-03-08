@@ -175,13 +175,13 @@ export class mainScene {
 
     const spotLight = new SpotLight(
       "spotLight",
-      new Vector3(0, 0.5, -4),
-      new Vector3(0, 0, 4),
+      new Vector3(-4, 0.5, 0),
+      new Vector3(4, 0, 0),
       Math.PI / 2,
       10,
       this.scene
     );
-    spotLight.intensity = 100;
+    spotLight.intensity = 1000;
     spotLight.shadowEnabled = true;
     // const shadowGen = new ShadowGenerator(2048, spotLight);
 
