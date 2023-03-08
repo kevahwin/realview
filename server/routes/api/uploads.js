@@ -13,7 +13,7 @@ const {
   s3GetBucketContents,
   s3GetFile,
   s3GetFileLink,
-  s3DeleteFile
+  s3DeleteFile,
 } = require("./s3service");
 const User = require("../../models/userModel");
 const ERROR_FILE_TYPE = "Only glb files are allowed.";
@@ -21,10 +21,20 @@ const MAX_SIZE = 1024 * 1024 * 10; // MAX SIZE OF 100MB
 
 const router = express.Router();
 
+// Uploading to local disk to a destination and with a given filename
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, '../client/public/models/');
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, 'item.glb');
+//     }
+// });
+
 //Creating storage for S3
 const storage = multer.memoryStorage();
 
-// Uploaded file validation using multer, incl. logic for local storage, file size, and file type
+// // Uploaded file validation using multer, incl. logic for local storage, file size, and file type
 const upload = multer({
   storage, //: storage,
   limits: {
@@ -43,10 +53,66 @@ const upload = multer({
   },
 });
 
+//Multer S3
+// const s3 = new aws.S3();
+// const upload = multer({
+//     storage: multerS3({
+//         bucket: process.env.AWS_BUCKET_NAME,
+//         s3: s3,
+//         // acl:"public-read",
+//         key: (req, file, cb) => {
+//             cb(null, `models/item.glb`);
+//         }
+//     }),
+//     limits: {
+//         fileSize: MAX_SIZE
+//     },
+//     fileFilter: (req, file, cb) => {
+//         if (!file.originalname.endsWith('.glb')) {
+//             const error = new Error("Wrong file type");
+//             error.code = "ERROR_FILE_TYPE";
+//             return cb(error, false);
+//         }
+//         cb(null, true);
+//     }
+// });
+
+// //Single Upload to S3
+// router.post('/', upload.single('file'), async (req, res) => {
+//     try{
+//         const file = req.file;
+//         console.log(file);
+//         res.status(200).json({
+//             success: true,
+//             message: "File uploaded successfully",
+//             data: {
+//                 file
+//             }
+//         });
+
+//     }catch(error){
+//         console.error(error);
+//         res.status(500).json({
+//             success: false,
+//             message: "File upload failed",
+//             error: error.message
+//         })
+//     }
+//     //console.log(req.file);
+//     //res.send(`Successfully uploaded ${req.file.originalname} to ${req.file.location}`);
+//     //res.send(`Successfully uploaded ${req.file.originalname} to ${result.Location }`)
+// });
+
 //POST Single Upload to S3
 router.post("/", upload.single("file"), async (req, res) => {
+  // if(err){
+  //     return res.status(400).json({success: false, message: err.message});
+  // }
+  const userEmail = req.body.user_email;
+  const randomId = req.body.randomId;
+
   //Upload the file
-  const result = await s3Uploadv2(req.file);
+  const result = await s3Uploadv2(req.file, userEmail, randomId);
 
   // //Get the fileLink (Hardcoded now - should be dynamic in future from req.file.location)
   // const filename = "item";
@@ -85,7 +151,7 @@ router.delete("/:id", async (req, res) => {
   // ...
   // delete the post from S3
   try {
-    console.log(`Trying to delete ${req.params.id}`)
+    console.log(`Trying to delete ${req.params.id}`);
     await s3DeleteFile(req.params.id);
     res.status(204).send();
   } catch (err) {

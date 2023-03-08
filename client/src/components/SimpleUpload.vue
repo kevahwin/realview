@@ -24,8 +24,8 @@
       </div>
     </div>
 
-    <input type="text" id="create-post" v-model="text" placeholder="Name your file">
-    <button class="button is-info" v-on:click="createPost" :disabled="uploading">
+    <input type="text" v-model="text" placeholder="Name your file">
+    <button class="button is-info"  :disabled="uploading">
       {{ uploading ? 'Uploading...' : 'Send' }}
     </button>
   </form>
@@ -35,6 +35,7 @@
   </button>
   <p class="error" v-if="error">{{ error }}</p>
   <div class="posts-container">
+
     <div class="post" v-for="(post, index) in posts" v-bind:item="post" v-bind:index="index" v-bind:key="post._id"
       v-on:dblclick="deletePost(post._id, post.post_id)">
       <p class="text">{{ post.text }}</p>
@@ -96,7 +97,7 @@ export default {
       this.error = false;
       this.message = "";
     },
-    async createPost() {
+    async createPost(randomId) {
       if (!this.text) {
         this.error = "Please enter some text for the post";
         return;
@@ -113,7 +114,8 @@ export default {
       }
       const userEmail = this.email;
       const post = this.text; // set the post's ID to the uploaded file's name
-      await PostService.insertPost(post, userEmail);
+      const id = randomId;
+      await PostService.insertPost(post, userEmail, id);
       this.posts = await PostService.getPosts(userEmail);
     },
 
@@ -132,16 +134,21 @@ export default {
 
     // PUSHING THE UPLOADED FILE TO BACKEND
     async sendFile() {
+      const randomId = "prefix_" + Math.random().toString(36).substring(2, 15);
+      this.createPost(randomId);
+      const userEmail = this.email;
+      //const postText = this.text;
       this.uploading = true;
       const formData = new FormData();
       formData.append('file', this.file);
+      formData.append('randomId', randomId);
       console.log("file:", this.file);
 
       try {
         if (this.fileExtension !== "glb" && this.fileExtension !== "obj") {
           throw new Error("Invalid file type. Please select a GLB file.");
         }
-        await axios.post('/api/uploads', formData);
+        await axios.post('/api/uploads', formData, userEmail, randomId);
         this.message = "File has been uploaded";
         this.file = "";
         this.error = false;
