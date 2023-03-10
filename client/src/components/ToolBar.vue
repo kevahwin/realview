@@ -76,7 +76,7 @@
   </script>
 
 <style>
-.v-navigation-drawer__content {
+/* .v-navigation-drawer__content {
   overflow-y: auto !important;
 }
 .v-navigation-drawer__content:is(.rail) {
@@ -84,7 +84,7 @@
 }
 .rail {
   overflow-y: auto !important;
-}
+} */
 .nametag{
   position: inherit;
   float: left;

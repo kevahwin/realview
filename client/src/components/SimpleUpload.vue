@@ -9,29 +9,28 @@
 
     <div class="field">
       <div class="file is-boxed is-primary">
-        <label class="file-label">
+        <label class="file-label" placeholder="Select 3D file">
 
-          <input type="file" ref="file" @change="selectFile" class="file-input" />
+          <input type="file" ref="file" @change="selectFile" class="file-input"  />
 
           <span class="file-cta">
             <span class="file-icon">
               <i class="fas fa-upload">
               </i>
             </span>
-
           </span>
         </label>
       </div>
     </div>
 
-    <input type="text" v-model="text" placeholder="Name your file">
+    <input type="text" v-model="text" placeholder="Name your 3D file">
     <button class="button is-info"  :disabled="uploading">
       {{ uploading ? 'Uploading...' : 'Send' }}
     </button>
   </form>
   <hr>
   <button @click="addAllToScene">
-    Display All Objects
+    Display All Objects (Double Tap to Delete)
   </button>
   <p class="error" v-if="error">{{ error }}</p>
   <div class="posts-container">
@@ -110,7 +109,7 @@ export default {
       }
 
       if (this.fileExtension !== "glb" && this.fileExtension !== "obj") {
-        this.error = "Invalid file type. Please select a GLB file.";
+        this.error = "Invalid file type. Please select a 3D model file (.GLB or .OBJ file).";
         return;
       }
       const userEmail = this.email;
@@ -138,7 +137,6 @@ export default {
       const randomId = uuidv4();
       this.createPost(randomId);
       const userEmail = this.email;
-      //const postText = this.text;
       this.uploading = true;
       const formData = new FormData();
       formData.append('file', this.file);
@@ -232,34 +230,6 @@ export default {
     listItem() {
       this.items.push({ name: this.itemName });
       this.itemName = '';
-    },
-
-    //Using Axios - Doesnt work
-    // async addToScene(){
-    //     try{
-    //         await axios.get('/api/uploads/item');
-    //         this.message = "Adding file to scene";
-    //         this.error = false;
-
-    //     } catch(err){
-    //         console.log(err);
-    //         this.message = err.response.data.error;
-    //         this.error = true;
-    //     }
-    // }
-    getItem() {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', 'http://localhost:5001/api/uploads/item', true);
-      xhr.responseType = 'document';
-
-      xhr.onload = function () {
-        if (xhr.readyState === xhr.DONE && xhr.status === 200) {
-          const fileData = xhr.response;
-          console.log(fileData);
-        }
-      };
-
-      xhr.send();
     }
   }
 }
