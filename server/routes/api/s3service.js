@@ -1,5 +1,4 @@
 const { S3 } = require("aws-sdk");
-const multer = require("multer");
 const { loadPostsCollection } = require("./posts.js");
 
 //Upload file to s3
@@ -62,13 +61,32 @@ exports.s3GetFileLink = async (id) => {
   return await s3.getSignedUrl("getObject", param);
 };
 
-// Delete file from S3 -
+// Delete file from S3 - Default (.GLB)
 exports.s3DeleteFile = async (id) => {
   const s3 = new S3();
 
   const param = {
     Bucket: process.env.AWS_BUCKET_NAME,
-    Key: `models/${id}.glb` || `models/${id}.obj`,
+    Key: `models/${id}.glb`,
+  };
+  return await s3.deleteObject(param, function (err, data) {
+    console.log(`Data before: ${data}`);
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Successfully deleted file from S3 bucket");
+      console.log(`Data after: ${data}`);
+    }
+  });
+};
+
+// Delete file from S3 - (.OBJ)
+exports.s3DeleteObjFile = async (id) => {
+  const s3 = new S3();
+
+  const param = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key:  `models/${id}.obj`,
   };
   return await s3.deleteObject(param, function (err, data) {
     console.log(`Data before: ${data}`);

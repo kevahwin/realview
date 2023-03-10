@@ -2,8 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const mongodb = require("mongodb");
 const dotenv = require("dotenv").config();
-const { S3 } = require("aws-sdk");
-const { s3Uploadv2 } = require("./s3service.js");
+
 
 const router = express.Router();
 
