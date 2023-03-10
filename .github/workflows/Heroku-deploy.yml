@@ -47,3 +47,6 @@ jobs:
           heroku_email: 'kirillsakharov@yahoo.co.uk'
           buildpack: 'heroku/nodejs'
           branch: 'main'
+        env:
+          HD_AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          HD_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
