@@ -10,9 +10,6 @@
             <router-link to="/HomeView" class="nav-link" active-class="active">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/CanvasView" class="nav-link" active-class="active">Portfolio</router-link>
-          </li>
-          <li class="nav-item">
             <router-link to="/TeamView" class="nav-link" active-class="active">Team</router-link>
           </li>
           <li class="nav-item">

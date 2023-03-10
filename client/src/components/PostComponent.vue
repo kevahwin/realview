@@ -1,5 +1,4 @@
 <template>
-<!-- <form @submit.prevent="sendFile" enctype="multipart/form-data"> -->
 <div>
         <div v-if="message"
             :class="`message ${error ? 'is-danger' : 'is-success'}`"
@@ -9,29 +8,7 @@
             </div>
         </div>
   
-        <!-- <div class="field">
-            <div class="file is-boxed is-primary">
-                
-                <label class="file-label">
-
-                    <input
-                    type="file"
-                    ref="file"
-                    @change="selectFile"
-                    class="file-input"
-                    />
-
-                    <span class="file-cta">
-                        <span class="file-icon">
-                            <i class="fas fa-upload">
-                            </i>
-                        </span>
-
-                    </span>
-                </label>
-            </div>
-        </div> -->
-        <div class="container">
+  <div class="container">
     <h1>Latest Posts</h1>
     <div class="create-post">
       <label for="create-post">Say something</label>
@@ -53,15 +30,12 @@
       </div>
     </div>
   </div>
-  <!-- </form> -->
 </div>
 </template>
 
 <script>
 // import axios from 'axios';
 import PostService from '../PostService';
-//import * as BABYLON from 'babylonjs';
-//mport { SceneLoader } from 'babylonjs';
 var SceneLoader = require("@babylonjs/core").SceneLoader;
 export default {
   name: 'PostComponent',  
@@ -104,30 +78,10 @@ export default {
         }
       );
     },
-    // selectFile() {
-    //     this.file = this.$refs.file.files[0];
-    //     this.error = false;
-    //     this.message = "";
-    // },
     addFileToList() {
         this.uploadedFiles.push(this.fileName);
         this.fileName = '';   
     }
-    // PUSHING THE UPLOADED FILE TO BACKEND
-    // async sendFile() {
-    //     const formData = new FormData();
-    //     formData.append('file', this.file);
-    //     try {
-    //         await axios.post('api/uploads', formData);
-    //         this.message = "File has been uploaded";
-    //         this.file = "";
-    //         this.error = false;
-    //     } catch (err) {
-    //         console.log(err);
-    //         this.message = err.response.data.error;
-    //         this.error = true;
-    //     }
-    // }
    }
   
 
