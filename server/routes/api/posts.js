@@ -14,7 +14,6 @@ router.get("/", async (req, res) => {
   const posts = await loadPostsCollection();
   const filteredPosts = await posts.find({ user_email: userEmail }).toArray(); // posts.find({ userId: userId })
   res.send(filteredPosts); // Send the filtered posts as the response
-  // res.send(await posts.find({}).toArray());
 });
 
 // Add Post
@@ -50,7 +49,3 @@ async function loadPostsCollection() {
 module.exports = router;
 
 module.exports.loadPostsCollection = loadPostsCollection;
-
-//module.exports = router;
-
-// new comment - test
