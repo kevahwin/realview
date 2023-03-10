@@ -8,7 +8,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const multer = require('multer');
 const morgan = require('morgan');
-// const helmet = require('helmet');
 const uploads = require('./routes/api/uploads');
 const posts = require("./routes/api/posts");
 const signup = require("./routes/api/signup");
