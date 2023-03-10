@@ -54,7 +54,12 @@ export default {
             {
             id: 7,
             question: 'What is the pricing structure for RealView?',
-            answer: 'RealView remains an OpenSource project for now. Volunteary donations are welcome!'
+            answer: 'RealView remains an OpenSource project for now. Voluntary donations are welcome!'
+            },
+            {
+            id: 8,
+            question: 'What file types are compatible with RealView?',
+            answer: 'For now, you can inspect .glb and .obj files in RealView.'
             }
         // Add more FAQs here
         // ADD ICONS
