@@ -29,24 +29,23 @@
     </button>
   </form>
   <hr>
-  <button @click="addAllToScene">
-    Display All Objects (Double Tap to Delete)
-  </button>
+  <button class="button is-info display-all-objects" @click="addAllToScene">
+  <span class="icon">
+    <i class="fas fa-cubes"></i>
+  </span>
+  <span>Display All Objects </span>
+</button>
   <p class="error" v-if="error">{{ error }}</p>
   <div class="posts-container">
 
     <div class="post" v-for="(post, index) in posts" v-bind:item="post" v-bind:index="index" v-bind:key="post._id"
-      v-on:dblclick="deletePost(post._id, post.post_id)">
+      >
+      <button @click="deletePost(post._id, post.post_id)"> Remove File </button>
       <p class="text">{{ post.text }}</p>
       <button class="addButton" v-on:click="addToScene2(post); addToScene(post)">Add To Scene</button>
     </div>
   </div>
-  <ul>
-    <li v-for="(item, index) in items" :key="index">
-      {{ itemName }}{{ index + 1 }}
-      <button @click="addToScene(index); addToScene2(index)">Add to Scene</button>
-    </li>
-  </ul>
+
 </template>
 
 <script>
@@ -113,7 +112,7 @@ export default {
         return;
       }
       const userEmail = this.email;
-      const post = this.text; // set the post's ID to the uploaded file's name
+      const post = this.text; 
       const id = randomId;
       await PostService.insertPost(post, userEmail, id);
       this.posts = await PostService.getPosts(userEmail);
@@ -145,7 +144,7 @@ export default {
 
       try {
         if (this.fileExtension !== "glb" && this.fileExtension !== "obj") {
-          throw new Error("Invalid file type. Please select a GLB file.");
+          throw new Error("Invalid file type. Please select a GLB/OBJ file.");
         }
         await axios.post('/api/uploads', formData, userEmail, randomId);
         this.message = "File has been uploaded";
@@ -167,38 +166,30 @@ export default {
         "https://realviewtest1.s3.eu-west-2.amazonaws.com/models/",
 
         `${post.post_id}.obj`,
-        this.$parent.scene, // use the scene object from your parent component
+        this.$parent.scene, 
         function (newMeshes) {
           var importedMesh = newMeshes[0];
           importedMesh.position = new Vector3(5, 5, 5);
           console.log(importedMesh);
-          // do something with the imported mesh
+         
           var manager2 = new GUI3DManager(this.$parent.scene);
 
           const near2 = new NearMenu("near");
           manager2.addControl(near2);
-          let follower = near2.defaultBehavior.followBehavior; //returns the followbehavior created by the
+          let follower = near2.defaultBehavior.followBehavior; 
           follower.defaultDistance = 3;
           follower.minimumDistance = 1;
           follower.maximumDistance = 5;
 
           const button0 = new HolographicButton("AddLight");
-          // button0.imageUrl = "./textures/IconFollowMe.png";
+          
           button0.text = "Add Light";
           near2.addButton(button0);
-          // button0.onPointerUpObservable.add(function () {
-          //   donut.rotation.x -= 0.05;
-          // });
 
           const button1 = new HolographicButton("RemoveLight");
-          // button1.imageUrl = "./textures/IconClose.png";
+          
           button1.text = "Remove Light";
           near2.addButton(button1);
-
-          // const button2 = new HolographicButton("button2");
-          // // button2.imageUrl = "./textures/IconFollowMe.png";
-          // button2.text = "Button 2";
-          // near2.addButton(button2);
 
           near2.isPinned = true;
         }
@@ -216,7 +207,7 @@ export default {
         function (newMeshes) {
           var importedMesh = newMeshes[0];
           console.log(importedMesh);
-          // do something with the imported mesh
+
         }
       );
       importedMesh2.position = new Vector3(10, 10, 10);
@@ -299,4 +290,63 @@ div.created-at {
   color: #FFFFFF;
   font-size: 13px;
 }
+
+.display-all-objects {
+  background-color: #22324E;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.display-all-objects:hover {
+  background-color: #375B84;
+}
+
+.display-all-objects:active {
+  background-color: #22324E;
+}
+
+.display-all-objects .icon {
+  margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .display-all-objects {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}
+.display-all-objects {
+  margin-bottom: 10px;
+}
+
+.addButton, button {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: none;
+  margin-right: 10px;
+  background-color: #22324E;
+  color: #FFFFFF;
+}
+
+.addButton:hover, button:hover {
+  background-color: #375B84;
+}
+
+input[type="text"] {
+  font-size: 18px;
+  color: #333;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
 </style>

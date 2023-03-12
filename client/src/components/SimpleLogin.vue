@@ -27,13 +27,9 @@
     },
     methods: {
       submitForm() {
-        // You can implement your login functionality here.
-        // For example, you can make an API call to a backend to verify the user's credentials.
         if (this.username === 'example' && this.password === 'password') {
-          // Successful login, do something like redirect to another page
           alert('You are logged in!')
         } else {
-          // Invalid credentials, display an error message
           this.errorMessage = 'Invalid username or password.'
         }
       }
