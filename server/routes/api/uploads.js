@@ -16,17 +16,16 @@ const {
 } = require("./s3service");
 const User = require("../../models/userModel");
 const ERROR_FILE_TYPE = "Only glb files are allowed.";
-const MAX_SIZE = 1024 * 1024 * 100; // MAX SIZE OF 100MB
+const MAX_SIZE = 1024 * 1024 * 10; // MAX SIZE OF 10 MB
 
 const router = express.Router();
-
 
 //Creating storage for S3
 const storage = multer.memoryStorage();
 
 // // Uploaded file validation using multer, incl. logic for local storage, file size, and file type
 const upload = multer({
-  storage, //: storage,
+  storage,
   limits: {
     fileSize: MAX_SIZE,
   },
@@ -91,7 +90,7 @@ router.delete("/:id", async (req, res) => {
 //Error Handling (Must Come After POST Request)
 router.use(function (err, req, res, next) {
   if (err.code === "ERROR_FILE_TYPE") {
-    res.status(422).json({ error: "Only .glb files are allowed!" });
+    res.status(422).json({ error: "Only .glb and .obj files are allowed!" });
     return;
   }
   if (err.code === "LIMIT_FILE_SIZE") {
