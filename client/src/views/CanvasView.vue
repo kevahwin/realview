@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
       <NavbarComponent />
-      <MainComp />
+      <DemoComp />
       <router-link to="/LoginView">
         <div class="centered">
           <button class="btn btn-primary float-button">Login to upload files</button>
@@ -12,13 +12,13 @@
   </template>
   
   <script>
-  import MainComp from '../components/MainComp.vue';
+  import DemoComp from '../components/DemoComp.vue'
   import NavbarComponent from '../components/NavbarComponent.vue';
   
   export default {
     name: 'App',
     components: {
-      MainComp,
+      DemoComp,
       NavbarComponent,
     },
   };
